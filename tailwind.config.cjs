@@ -5,6 +5,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        righteous: ["'Righteous'", "cursive", "sans-serif"],
         notoSans: ["'Noto Sans TC'", "Verdana", "sans-serif"],
       },
     },
