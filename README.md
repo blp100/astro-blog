@@ -66,3 +66,13 @@ Check out [our documentation](https://docs.astro.build) or jump into our [Discor
 ## Credit
 
 This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+
+## Developing Resources
+
+08.19
+comments with github -giscus
+https://www.thomasledoux.be/blog/hosting-blog-comments-reactions-github-discussions
+https://pierolescano.com/blog/adding_comments_to_my_blog/
+
+comments by your own
+https://bloycey.blog/posts/blog-comments-using-astro-and-supabase/
