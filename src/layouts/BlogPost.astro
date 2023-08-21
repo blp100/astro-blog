@@ -8,8 +8,8 @@ import Body from "../components/Body.astro";
 
 type Props = CollectionEntry<"blog">["data"];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
-console.log(Astro.props);
+const { title, description, pubDate, updatedDate, heroImage, minutesRead } =
+  Astro.props;
 ---
 
 <html lang="en">
@@ -80,6 +80,7 @@ console.log(Astro.props);
               }
             </div>
             <h1>{title}</h1>
+            <div class="date">{minutesRead}</div>
             <hr />
           </div>
           <slot />
