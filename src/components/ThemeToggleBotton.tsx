@@ -7,15 +7,12 @@ const ThemeToggle = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [theme, setTheme] = useState(() => {
     if (import.meta.env.SSR) {
-      console.log("SSR");
       return undefined;
     }
     if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-      console.log("had localStorage");
       return localStorage.getItem("theme");
     }
     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      console.log("is dark");
       return "dark";
     }
     return "light";

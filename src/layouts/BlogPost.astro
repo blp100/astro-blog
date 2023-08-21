@@ -9,6 +9,7 @@ import Body from "../components/Body.astro";
 type Props = CollectionEntry<"blog">["data"];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+console.log(Astro.props);
 ---
 
 <html lang="en">
@@ -87,4 +88,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     </main>
     <Footer />
   </Body>
+
+
 </html>
