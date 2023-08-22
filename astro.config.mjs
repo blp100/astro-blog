@@ -4,6 +4,7 @@ import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import { remarkReadingTime } from "./remark-reading-time.mjs";
 import react from "@astrojs/react";
+import addClasses from "rehype-add-classes";
 
 // https://astro.build/config
 export default defineConfig({
@@ -11,5 +12,18 @@ export default defineConfig({
   integrations: [mdx(), sitemap(), tailwind(), react()],
   markdown: {
     remarkPlugins: [remarkReadingTime],
+    rehypePlugins: [
+      [
+        addClasses,
+        {
+          h1: "text-4xl font-bold",
+          h2: "text-2xl font-bold",
+          h3: "text-xl font-bold",
+          h4: "text-lg font-bold",
+          h5: "font-bold",
+          h6: "font-bold",
+        },
+      ],
+    ],
   },
 });
