@@ -1,0 +1,41 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { getCollection } from "astro:content";
+import Body from "../components/Body.astro";
+import Article from "../components/Article.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <Body>
+    <Header title={SITE_TITLE} />
+    <main class="pt-16">
+      <Article>
+        <section
+          class="flex flex-col justify-center items-center h-[calc(100vh-8rem)]"
+        >
+          <div>
+            <h1 class="text-4xl mb-6">404</h1>
+            <p class="text-xl">
+              Oh no! It seems you've ventured into uncharted territory.
+            </p>
+            <a class="my-1" href="/">Leave the path, <span class="text-amber-400">[Restart]?</span></a>
+            <hr class="border-t border-zinc-400 my-2" />
+            <p class="text-xs">
+              The story you were looking for, {Astro.url.pathname} does not
+              exist.
+            </p>
+          </div>
+        </section>
+      </Article>
+    </main>
+    <Footer />
+  </Body>
+</html>
