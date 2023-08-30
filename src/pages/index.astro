@@ -7,10 +7,27 @@ import { getCollection } from "astro:content";
 import Body from "../components/Body.astro";
 import Article from "../components/Article.astro";
 import FormattedDate from "../components/FormattedDate.astro";
+import { contentfulClient } from "../lib/contentful";
+import type { BlogPost } from "../lib/contentful";
 
-const posts = (await getCollection("blog")).sort(
-  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
-);
+const entries = await contentfulClient.getEntries<BlogPost>({
+  content_type: "astroBlog",
+});
+
+const posts = entries.items.map((item) => {
+  const { title, date, description, slug, heroImage } = item.fields;
+  return {
+    title,
+    slug,
+    description,
+    heroImage,
+    date: new Date(date),
+  };
+});
+
+// const posts = (await getCollection("blog")).sort(
+//   (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+// );
 ---
 
 <!DOCTYPE html>
@@ -22,10 +39,24 @@ const posts = (await getCollection("blog")).sort(
     <Header title={SITE_TITLE} />
     <main class="pt-16">
       <Article>
-        <section><p class="mb-8 indent-4">text-base</p></section>
         <section>
           <ul>
             {
+              posts.map((post) => {
+                console.log(post.heroImage);
+                return (
+                  <li>
+                    <a href={`/posts/${post.slug}/`}>
+                      <h2>{post.title}</h2>
+                    </a>
+                    <FormattedDate date={post.date} />
+                    <p>{post.description}</p>
+                    <p>{post.heroImage}</p>
+                  </li>
+                );
+              })
+            }
+            <!-- {
               posts.map(async (post) => {
                 const { remarkPluginFrontmatter } = await post.render();
                 const minutesRead = remarkPluginFrontmatter.minutesRead;
@@ -47,7 +78,7 @@ const posts = (await getCollection("blog")).sort(
                   </li>
                 );
               })
-            }
+            } -->
           </ul>
         </section>
       </Article>
