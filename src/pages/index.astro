@@ -43,15 +43,19 @@ const posts = entries.items.map((item) => {
           <ul>
             {
               posts.map((post) => {
-                console.log(post.heroImage);
+                const { slug, title, date, description, heroImage } = post;
+
+                const image: any = heroImage;
+                const imageUrl: string = image.fields.file.url;
+                
                 return (
                   <li>
-                    <a href={`/posts/${post.slug}/`}>
-                      <h2>{post.title}</h2>
+                    <a href={`/posts/${slug}/`}>
+                      <h2>{title}</h2>
                     </a>
-                    <FormattedDate date={post.date} />
-                    <p>{post.description}</p>
-                    <p>{post.heroImage}</p>
+                    <FormattedDate date={date} />
+                    <p>{description}</p>
+                    <img src={imageUrl} />
                   </li>
                 );
               })
