@@ -8,7 +8,7 @@ import Body from "../components/Body.astro";
 import Article from "../components/Article.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import { contentfulClient } from "../lib/contentful";
-import type { BlogPost } from "../lib/contentful";
+import type { BlogPost, HeroImage } from "../lib/contentful";
 
 const entries = await contentfulClient.getEntries<BlogPost>({
   content_type: "astroBlog",
@@ -20,7 +20,7 @@ const posts = entries.items.map((item) => {
     title,
     slug,
     description,
-    heroImage,
+    heroImage: heroImage as HeroImage,
     date: new Date(date),
   };
 });
@@ -44,18 +44,17 @@ const posts = entries.items.map((item) => {
             {
               posts.map((post) => {
                 const { slug, title, date, description, heroImage } = post;
+                const imageUrl: string = heroImage.fields.file.url;
 
-                const image: any = heroImage;
-                const imageUrl: string = image.fields.file.url;
-                
                 return (
                   <li>
-                    <a href={`/posts/${slug}/`}>
+                    <a href={`/blog/${slug}/`}>
+                      <img src={imageUrl} class="rounded-xl" />
                       <h2>{title}</h2>
                     </a>
                     <FormattedDate date={date} />
+
                     <p>{description}</p>
-                    <img src={imageUrl} />
                   </li>
                 );
               })

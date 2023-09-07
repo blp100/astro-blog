@@ -1,4 +1,4 @@
-import contentful, { EntryFieldTypes } from "contentful";
+import contentful, { Asset, EntryFieldTypes } from "contentful";
 
 type HeroImageEntrySkeleton = {
   contentTypeId: "heroImage";
@@ -7,6 +7,13 @@ type HeroImageEntrySkeleton = {
   };
 };
 
+export interface HeroImage {
+  fields: {
+    file: {
+      url: string;
+    };
+  };
+}
 export interface BlogPost {
   contentTypeId: "astroBlog";
   fields: {
@@ -15,7 +22,7 @@ export interface BlogPost {
     date: EntryFieldTypes.Date;
     description: EntryFieldTypes.Text;
     slug: EntryFieldTypes.Text;
-    heroImage: EntryFieldTypes.AssetLink;
+    heroImage: Asset & HeroImage,
   };
 }
 

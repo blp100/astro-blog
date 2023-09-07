@@ -5,11 +5,12 @@ import tailwind from "@astrojs/tailwind";
 import { remarkReadingTime } from "./remark-reading-time.mjs";
 import react from "@astrojs/react";
 import addClasses from "rehype-add-classes";
+import markdownIntegration from "@astropub/md";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://example.com",
-  integrations: [mdx(), sitemap(), tailwind(), react()],
+  integrations: [mdx(), sitemap(), tailwind(), react(), markdownIntegration()],
   markdown: {
     remarkPlugins: [remarkReadingTime],
     rehypePlugins: [
