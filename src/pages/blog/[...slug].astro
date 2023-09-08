@@ -11,6 +11,7 @@ try {
     content_type: "astroBlog",
     "fields.slug": slug,
   });
+  console.log(data);
   const { title, date, content,description, heroImage } = data.items[0].fields;
   post = {
     title,
