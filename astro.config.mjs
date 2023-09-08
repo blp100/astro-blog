@@ -6,9 +6,12 @@ import { remarkReadingTime } from "./remark-reading-time.mjs";
 import react from "@astrojs/react";
 import addClasses from "rehype-add-classes";
 import markdownIntegration from "@astropub/md";
+import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
+  output: "server",
+  adapter: vercel(),
   site: "https://example.com",
   integrations: [mdx(), sitemap(), tailwind(), react(), markdownIntegration()],
   markdown: {
