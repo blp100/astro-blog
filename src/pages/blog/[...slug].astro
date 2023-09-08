@@ -1,4 +1,10 @@
 ---
+import Article from "../../components/Article.astro";
+import BaseHead from "../../components/BaseHead.astro";
+import Body from "../../components/Body.astro";
+import Footer from "../../components/Footer.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+import Header from "../../components/Header.astro";
 import Post from "../../layouts/Post.astro";
 import { contentfulClient } from "../../lib/contentful";
 import type { BlogPost, HeroImage } from "../../lib/contentful";
@@ -25,6 +31,51 @@ try {
 }
 ---
 
-<Post {...post}>
+
+<html lang="en">
+  <head>
+    <BaseHead title={post?.title} description={post?.description} />
+  </head>
+
+  <Body>
+    <Header />
+    <main class="pt-16">
+      <Article className="flex flex-col gap-2 pt-8">
+        <div class="mb-8">
+          {
+            post?.heroImage && (
+              <img class="rounded-lg" height={510} src={post?.heroImage} alt="" />
+            )
+          }
+        </div>
+
+        <h1 class="text-4xl">{post?.title}</h1>
+        <div>{post?.description}</div>
+        <div class="flex gap-3 text-xs text-zinc-400">
+          <div>
+            <FormattedDate date={post?.pubDate} />
+            {
+              post?.pubDate && (
+                <div class="last-updated-on">
+                  Last updated on <FormattedDate date={post?.pubDate} />
+                </div>
+              )
+            }
+          </div>
+          <!-- <div>{minutesRead}</div> -->
+        </div>
+        <hr class="border-t border-zinc-400 my-2" />
+        <Markdown.Inline of={post?.content.toString()} />
+        <span
+          class="underline underline-offset-2 hover:text-orange-500 decoration-orange-500 text-lg list-disc"
+        ></span>
+        <span class="text-lg font-bold text-4xl text-2xl text-xl hidden"></span>
+      </Article>
+    </main>
+    <Footer />
+  </Body>
+</html>
+
+<!-- <Post {...post}>
   <Markdown.Inline of={post?.content.toString()} />
-</Post>
+</Post> -->
