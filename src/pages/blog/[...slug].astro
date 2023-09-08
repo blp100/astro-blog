@@ -12,7 +12,6 @@ try {
     "fields.slug": slug,
   });
   const { title, date, content,description, heroImage } = data.items[0].fields;
-  console.log(data.items[0].fields.content);
   post = {
     title,
     pubDate: new Date(date),
