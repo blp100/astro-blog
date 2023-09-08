@@ -10,8 +10,6 @@ import FormattedDate from "../components/FormattedDate.astro";
 import { contentfulClient } from "../lib/contentful";
 import type { BlogPost, HeroImage } from "../lib/contentful";
 
-export const prerender = true;
-
 const entries = await contentfulClient.getEntries<BlogPost>({
   content_type: "astroBlog",
 });

@@ -4,26 +4,29 @@ import { contentfulClient } from "../../lib/contentful";
 import type { BlogPost, HeroImage } from "../../lib/contentful";
 import { Markdown } from "@astropub/md";
 
-let post;
-const { slug } = Astro.params;
-try {
-  const data = await contentfulClient.getEntries<BlogPost>({
+export async function getStaticPaths() {
+  const { items } = await contentfulClient.getEntries<BlogPost>({
     content_type: "astroBlog",
-    "fields.slug": slug,
   });
-  const { title, date, content,description, heroImage } = data.items[0].fields;
-  post = {
-    title,
-    pubDate: new Date(date),
-    content,
-    description,
-    heroImage: (heroImage as HeroImage).fields.file.url,
-  };
-} catch (error) {
-  return Astro.redirect("/404");
-}
----
 
-<Post {...post}>
-  <Markdown.Inline of={post?.content.toString()} />
+  const pages = items.map((item) => {
+    const { title, date, content, description, heroImage, slug } = item.fields;
+    return {
+      params: { slug },
+      props: {
+        title,
+        content,
+        pubDate: new Date(date),
+        description,
+        heroImage: (heroImage as HeroImage).fields.file.url,
+      },
+    };
+  });
+  return pages;
+}
+
+const { content, ...data } = Astro.props;
+---
+<Post {...data}>
+  <Markdown.Inline of={content} />
 </Post>
