@@ -36,4 +36,7 @@ export default defineConfig({
       external: ["react-icons"],
     },
   },
+  build: {
+    serverEntry: "main.mjs",
+  },
 });
