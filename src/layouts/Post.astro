@@ -18,7 +18,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     <Header />
     <main class="pt-16">
       <Article className="flex flex-col gap-2">
-        <h1 class="text-4xl">{title}</h1>
+        <h1 class="text-4xl font-bold mb-1">{title}</h1>
         <div>{description}</div>
         <div class="flex gap-3 text-xs text-neutral-500">
           <FormattedDate date={pubDate} />

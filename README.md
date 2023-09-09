@@ -76,3 +76,16 @@ https://pierolescano.com/blog/adding_comments_to_my_blog/
 
 comments by your own
 https://bloycey.blog/posts/blog-comments-using-astro-and-supabase/
+
+
+09.08
+How to use Deploy Hooks with Vercel and Contentful (Headless CMS)
+https://vercel.com/guides/set-up-and-use-deploy-hooks-with-vercel-and-headless-cms
+
+09.09
+How to change scroll offset
+https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin
+Add i18n features
+https://docs.astro.build/en/recipes/i18n/
+Add language detection
+https://stackoverflow.com/questions/18982228/how-to-add-meta-tag-in-javascript

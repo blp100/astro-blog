@@ -16,13 +16,17 @@ export interface HeroImage {
 }
 export interface BlogPost {
   contentTypeId: "astroBlog";
+  sys: {
+    createdAt: EntryFieldTypes.Date;
+    updatedAt: EntryFieldTypes.Date;
+  };
   fields: {
     title: EntryFieldTypes.Text;
     content: EntryFieldTypes.RichText;
     date: EntryFieldTypes.Date;
     description: EntryFieldTypes.Text;
     slug: EntryFieldTypes.Text;
-    heroImage: Asset & HeroImage,
+    heroImage: Asset & HeroImage;
   };
 }
 

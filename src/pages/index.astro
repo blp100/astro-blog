@@ -10,7 +10,6 @@ import { contentfulClient } from "../lib/contentful";
 import type { BlogPost, HeroImage } from "../lib/contentful";
 import { Markdown } from "@astropub/md/Markdown";
 import { getLangFromUrl } from "../i18n/utils";
-import LanguagePicker from "../components/LanguagePicker.astro";
 
 const lang = getLangFromUrl(Astro.url);
 
@@ -42,19 +41,22 @@ const posts = entries.items.map((item) => {
 <html lang={lang}>
   <head>
     <!-- Set up pages for users' language -->
+
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <script is:inline>
       if (window.navigator.language) {
         let meta = document.createElement("meta");
         meta.httpEquiv = "refresh";
-        meta.content = `0;url=/${(/^zh\b/.test(window.navigator.language))?"zh-tw":"en"}/`;
-        document.getElementsByTagName('head')[0].appendChild(meta);
+        meta.content = `0;url=/${
+          /^zh\b/.test(window.navigator.language) ? "zh-tw" : "en"
+        }/`;
+        document.head.appendChild(meta);
       }
     </script>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
   <Body>
     <Header title={SITE_TITLE} />
-    <main class="pt-16">
+    <!-- <main class="pt-16">
       <Article>
         <section>
           <ul>
@@ -110,8 +112,8 @@ const posts = entries.items.map((item) => {
           </ul>
         </section>
       </Article>
-      <LanguagePicker />
     </main>
-    <Footer />
+    <Footer /> -->
   </Body>
+
 </html>

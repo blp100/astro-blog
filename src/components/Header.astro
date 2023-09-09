@@ -3,6 +3,11 @@ import { SITE_TITLE, HOMEPAGE_URL } from "../consts";
 import HeaderLink from "./HeaderLink.astro";
 import { IoLeaf, IoLogoGithub } from "react-icons/io5";
 import ThemeToggle from "./ThemeToggleBotton";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import LanguagePicker from "./LanguagePicker.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <header class="fixed w-full p-2 z-20 backdrop-blur">
@@ -10,19 +15,22 @@ import ThemeToggle from "./ThemeToggleBotton";
     <h2
       class="font-semibold font-righteous uppercase text-xl tracking-tight p-2"
     >
-      <a class="inline-flex gap-1 items-center" href="/"
+      <a class="inline-flex gap-1 items-center font-righteous" href="/"
         ><IoLeaf />{SITE_TITLE}</a
       >
     </h2>
     <div class="flex-1"></div>
-    <div class="items-center gap-6 hidden lg:flex">
-      <HeaderLink href="/">Categories</HeaderLink>
-      <HeaderLink href={HOMEPAGE_URL}>About</HeaderLink>
+    <div
+      class=`items-center gap-6 hidden lg:flex ${(lang=="en")?"font-righteous":""}`
+    >
+      <HeaderLink href="/">{t("nav.categories")}</HeaderLink>
+      <HeaderLink href={HOMEPAGE_URL}>{t("nav.about")}</HeaderLink>
       <HeaderLink href="https://github.com/blp100/astro-blog">
-        <IoLogoGithub />
-         Source
+        <IoLogoGithub size={24} className="mb-0.5" />
+        {t("nav.source")}
       </HeaderLink>
     </div>
+    <LanguagePicker />
     <ThemeToggle client:load />
   </nav>
 </header>
