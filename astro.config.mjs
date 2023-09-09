@@ -23,6 +23,11 @@ export default defineConfig({
           h4: "text-lg font-bold",
           h5: "font-bold",
           h6: "font-bold",
+          hr: "hidden",
+          p: "text-lg my-2",
+          blockquote:
+            "p-4 bg-amber-100 dark:bg-neutral-800 border-l-4 border-orange-200 dark:border-neutral-700",
+          a: "text-sky-600 dark:text-sky-200",
         },
       ],
     ],

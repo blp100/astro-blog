@@ -41,12 +41,14 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
           </div>
           <!-- <div>{minutesRead}</div> -->
         </div>
-        <hr class="border-t border-zinc-400 my-2" />
+        <hr class="border-t-[6px] w-52 mx-auto border-orange-200 dark:border-neutral-400 my-2 border-double" />
         <slot />
         <span
           class="underline underline-offset-2 hover:text-orange-500 decoration-orange-500 text-lg list-disc"
         ></span>
-        <span class="text-lg font-bold text-4xl text-2xl text-xl hidden"></span>
+        <span
+          class="text-lg font-bold text-4xl text-2xl text-xl hidden bg-amber-100 dark:bg-neutral-800 border-l-4 border-orange-200 dark:border-neutral-700 text-sky-600 dark:text-sky-00"
+        ></span>
       </Article>
     </main>
     <Footer />

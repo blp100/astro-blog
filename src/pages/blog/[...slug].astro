@@ -15,7 +15,7 @@ export async function getStaticPaths() {
       params: { slug },
       props: {
         title,
-        content,
+        content: content.toString(),
         pubDate: new Date(date),
         description,
         heroImage: (heroImage as HeroImage).fields.file.url,
