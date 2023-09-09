@@ -1,16 +1,16 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
-import Body from "../components/Body.astro";
-import Article from "../components/Article.astro";
-import FormattedDate from "../components/FormattedDate.astro";
-import { contentfulClient } from "../lib/contentful";
-import type { BlogPost, HeroImage } from "../lib/contentful";
-import { Markdown } from "@astropub/md/Markdown";
-import { getLangFromUrl } from "../i18n/utils";
-import LanguagePicker from "../components/LanguagePicker.astro";
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import Body from "../../components/Body.astro";
+import Article from "../../components/Article.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+import { contentfulClient } from "../../lib/contentful";
+import type { BlogPost, HeroImage } from "../../lib/contentful";
+import { Markdown } from "@astropub/md";
+import { getLangFromUrl } from '../../i18n/utils';
+import LanguagePicker from '../../components/LanguagePicker.astro';
 
 const lang = getLangFromUrl(Astro.url);
 
@@ -41,15 +41,6 @@ const posts = entries.items.map((item) => {
 <!DOCTYPE html>
 <html lang={lang}>
   <head>
-    <!-- Set up pages for users' language -->
-    <script is:inline>
-      if (window.navigator.language) {
-        let meta = document.createElement("meta");
-        meta.httpEquiv = "refresh";
-        meta.content = `0;url=/${(/^zh\b/.test(window.navigator.language))?"zh-tw":"en"}/`;
-        document.getElementsByTagName('head')[0].appendChild(meta);
-      }
-    </script>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
   <Body>
@@ -110,8 +101,9 @@ const posts = entries.items.map((item) => {
           </ul>
         </section>
       </Article>
-      <LanguagePicker />
     </main>
+
+    <LanguagePicker />
     <Footer />
   </Body>
 </html>
