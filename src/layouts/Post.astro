@@ -9,7 +9,7 @@ import Article from "../components/Article.astro";
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <BaseHead title={title} description={description} />
   </head>
@@ -17,38 +17,32 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
   <Body>
     <Header />
     <main class="pt-16">
-      <Article className="flex flex-col gap-2 pt-8">
-        <div class="mb-8">
+      <Article className="flex flex-col gap-2">
+        <h1 class="text-4xl">{title}</h1>
+        <div>{description}</div>
+        <div class="flex gap-3 text-xs text-neutral-500">
+          <FormattedDate date={pubDate} />
           {
-            heroImage && (
-              <img class="rounded-lg" height={510} src={heroImage} alt="" />
+            updatedDate && (
+              <div class="last-updated-on">
+                Last updated on <FormattedDate date={updatedDate} />
+              </div>
             )
           }
         </div>
-
-        <h1 class="text-4xl">{title}</h1>
-        <div>{description}</div>
-        <div class="flex gap-3 text-xs text-zinc-400">
-          <div>
-            <FormattedDate date={pubDate} />
-            {
-              updatedDate && (
-                <div class="last-updated-on">
-                  Last updated on <FormattedDate date={updatedDate} />
-                </div>
-              )
-            }
-          </div>
-          <!-- <div>{minutesRead}</div> -->
+        <div class="mb-4">
+          <img class="rounded-lg" height={510} src={heroImage} alt="" />
         </div>
-        <hr class="border-t-[6px] w-52 mx-auto border-orange-200 dark:border-neutral-400 my-2 border-double" />
         <slot />
         <span
-          class="underline underline-offset-2 hover:text-orange-500 decoration-orange-500 text-lg list-disc"
+          class="underline underline-offset-2 hover:text-orange-500 decoration-orange-500 text-lg list-disc hidden"
         ></span>
         <span
-          class="text-lg font-bold text-4xl text-2xl text-xl hidden bg-amber-100 dark:bg-neutral-800 border-l-4 border-orange-200 dark:border-neutral-700 text-sky-600 dark:text-sky-00"
+          class="text-lg font-bold text-4xl text-2xl text-xl hidden bg-amber-100 dark:bg-neutral-800 border-l-4 border-orange-200 dark:border-neutral-700 text-amber-600 dark:text-amber-200 scroll-mt-16"
         ></span>
+        <hr
+          class="border-t-[6px] w-52 mx-auto my-4 border-orange-200 dark:border-zinc-400 border-double hidden"
+        />
       </Article>
     </main>
     <Footer />

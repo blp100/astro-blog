@@ -17,17 +17,17 @@ export default defineConfig({
       [
         addClasses,
         {
-          h1: "text-4xl font-bold",
-          h2: "text-2xl font-bold",
-          h3: "text-xl font-bold",
+          h1: "text-4xl font-bold scroll-mt-16",
+          h2: "text-2xl font-bold scroll-mt-16",
+          h3: "text-xl font-bold scroll-mt-16",
           h4: "text-lg font-bold",
           h5: "font-bold",
           h6: "font-bold",
-          hr: "hidden",
+          hr: "border-t-[6px] w-52 mx-auto my-4 border-orange-200 dark:border-zinc-400 border-double",
           p: "text-lg my-2",
           blockquote:
             "p-4 bg-amber-100 dark:bg-neutral-800 border-l-4 border-orange-200 dark:border-neutral-700",
-          a: "text-sky-600 dark:text-sky-200",
+          a: "text-amber-600 dark:text-amber-200",
         },
       ],
     ],
