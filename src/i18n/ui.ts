@@ -13,6 +13,9 @@ export const ui = {
     "nav.source": "Source".toUpperCase(),
     "nav.language": "中文",
     "nav.lang": "zh-tw",
+    "contentful.locale": "en",
+    "date.published": "Published",
+    "date.updated": "Updated",
   },
   "zh-tw": {
     "nav.home": "首頁",
@@ -21,5 +24,8 @@ export const ui = {
     "nav.source": "猿始碼",
     "nav.language": "English".toUpperCase(),
     "nav.lang": "en",
+    "contentful.locale": "zh-Hant-TW",
+    "date.published": "發行：",
+    "date.updated": "更新：",
   },
 } as const;

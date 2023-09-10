@@ -1,0 +1,44 @@
+---
+import BlogDate from "./BlogDate.astro";
+import { Markdown } from "@astropub/md";
+
+const {
+  lang,
+  slug,
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  content,
+} = Astro.props;
+---
+
+<>
+  <li class="flex flex-col gap-1">
+    <a href={`/${lang}/blog/${slug}/`}>
+      <h2 class="text-4xl font-bold mb-1">{title}</h2>
+    </a>
+    <span>{description}</span>
+    <div class="flex gap-2 text-xs text-neutral-400">
+      <BlogDate pubDate={pubDate} updatedDate={updatedDate} />
+    </div>
+    <img src={heroImage} class="rounded-xl" />
+    {
+      content.length > 100 ? (
+        <>
+          <Markdown.Inline of={content.slice(0, content.indexOf("[[MORE]]"))} />
+          <a
+            class="text-amber-600 dark:text-amber-200 text-xl block mt-2 mb-1"
+            href={`/${lang}/blog/${slug}/`}
+          >
+            ＞閱讀更多
+          </a>
+        </>
+      ) : (
+        <Markdown.Inline of={content} />
+      )
+    }
+  </li>
+  <hr class="my-4 border-b" />
+</>

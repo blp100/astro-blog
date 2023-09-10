@@ -38,19 +38,19 @@ const ThemeToggle = () => {
   }, []);
 
   return isMounted ? (
-    <div className="inline-flex p-1 items-center rounded-3xl bg-amber-300 dark:bg-zinc-600 hover:bg-amber-200 dark:hover:bg-slate-500">
+    <div className="inline-flex p-1 items-center rounded-3xl bg-neutral-200 dark:bg-amber-200 hover:bg-neutral-400 dark:hover:bg-amber-100 ">
       {themes.map((t) => {
         const checked = t === theme;
         return (
           <button
             key={t}
             className={`${
-              checked ? "bg-white text-black" : ""
+              checked ? "text-neutral-900" : "hidden"
             } cursor-pointer rounded-3xl p-2`}
             onClick={toggleTheme}
             aria-label="Toggle theme"
           >
-            {t === "light" ? <IoSunny /> : <IoMoon />}
+            {t === "light" ? <IoMoon /> : <IoSunny />}
           </button>
         );
       })}

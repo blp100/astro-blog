@@ -1,0 +1,26 @@
+---
+import FormattedDate from "./FormattedDate.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+interface Props {
+  pubDate: Date;
+  updatedDate: Date;
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const { pubDate, updatedDate } = Astro.props;
+---
+
+<>
+  <span>
+    {t("date.updated")}
+    <FormattedDate date={updatedDate} />
+  </span>
+   |
+  <span>
+    {t("date.published")}
+    <FormattedDate date={pubDate} />
+  </span>
+</>

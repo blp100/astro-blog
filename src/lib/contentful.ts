@@ -1,12 +1,5 @@
 import contentful, { Asset, EntryFieldTypes } from "contentful";
 
-type HeroImageEntrySkeleton = {
-  contentTypeId: "heroImage";
-  fields: {
-    file: EntryFieldTypes.Text;
-  };
-};
-
 export interface HeroImage {
   fields: {
     file: {

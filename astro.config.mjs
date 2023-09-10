@@ -19,7 +19,7 @@ export default defineConfig({
         {
           h1: "text-4xl font-bold scroll-mt-16",
           h2: "text-2xl font-bold scroll-mt-16 text-boston-blue-700 dark:text-boston-blue-200",
-          h3: "text-xl font-bold scroll-mt-16 text-boston-blue-500",
+          h3: "text-xl font-bold scroll-mt-16 text-boston-blue-500 dark:text-boston-blue-300",
           h4: "text-lg font-bold",
           h5: "font-bold",
           h6: "font-bold",
