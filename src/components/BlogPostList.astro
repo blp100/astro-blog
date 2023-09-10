@@ -1,4 +1,5 @@
 ---
+import { useTranslations } from "../i18n/utils";
 import BlogDate from "./BlogDate.astro";
 import { Markdown } from "@astropub/md";
 
@@ -12,6 +13,8 @@ const {
   heroImage,
   content,
 } = Astro.props;
+
+const t = useTranslations(lang);
 ---
 
 <>
@@ -32,7 +35,7 @@ const {
             class="text-amber-600 dark:text-amber-200 text-xl block mt-2 mb-1"
             href={`/${lang}/blog/${slug}/`}
           >
-            ＞閱讀更多
+            {t("index.readMore")}
           </a>
         </>
       ) : (

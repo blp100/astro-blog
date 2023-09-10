@@ -16,6 +16,7 @@ export const ui = {
     "contentful.locale": "en",
     "date.published": "Published",
     "date.updated": "Updated",
+    "index.readMore": ">> Read More",
   },
   "zh-tw": {
     "nav.home": "首頁",
@@ -27,5 +28,6 @@ export const ui = {
     "contentful.locale": "zh-Hant-TW",
     "date.published": "發行：",
     "date.updated": "更新：",
+    "index.readMore": "＞　閱讀更多",
   },
 } as const;
