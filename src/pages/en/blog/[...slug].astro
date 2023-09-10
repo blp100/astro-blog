@@ -11,11 +11,14 @@ export async function getStaticPaths() {
 
   const pages = items.map((item) => {
     const { title, date, content, description, heroImage, slug } = item.fields;
+
+    const updatedContent= content.toString().replace("[[MORE]]","");
+
     return {
       params: { slug },
       props: {
         title,
-        content: content.toString(),
+        content: updatedContent,
         pubDate: new Date(date),
         description,
         heroImage: (heroImage as HeroImage).fields.file.url,
