@@ -1,47 +1,18 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import Body from "../components/Body.astro";
-import Article from "../components/Article.astro";
-import FormattedDate from "../components/FormattedDate.astro";
-import { contentfulClient } from "../lib/contentful";
-import type { BlogPost, HeroImage } from "../lib/contentful";
-import { Markdown } from "@astropub/md/Markdown";
 import { getLangFromUrl } from "../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 
-const entries = await contentfulClient.getEntries<BlogPost>({
-  content_type: "astroBlog",
-  order: ["-sys.createdAt"],
-});
-
-const posts = entries.items.map((item) => {
-  const { updatedAt } = item.sys;
-  const { title, date, description, slug, heroImage, content } = item.fields;
-  return {
-    title,
-    slug,
-    description,
-    heroImage: (heroImage as HeroImage).fields.file.url,
-    pubDate: new Date(date),
-    updatedDate: new Date(updatedAt),
-    content: content.toString(),
-  };
-});
-
-// const posts = (await getCollection("blog")).sort(
-//   (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
-// );
 ---
 
 <!DOCTYPE html>
 <html lang={lang}>
   <head>
     <!-- Set up pages for users' language -->
-
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <script is:inline>
       if (window.navigator.language) {
@@ -56,64 +27,5 @@ const posts = entries.items.map((item) => {
   </head>
   <Body>
     <Header title={SITE_TITLE} />
-    <!-- <main class="pt-16">
-      <Article>
-        <section>
-          <ul>
-            {
-              posts.map((post) => {
-                const {
-                  slug,
-                  title,
-                  updatedDate,
-                  pubDate,
-                  description,
-                  heroImage,
-                  content,
-                } = post;
-
-                return (
-                  <>
-                    <li class="flex flex-col gap-1">
-                      <a href={`/blog/${slug}/`}>
-                        <h2 class="text-4xl font-bold mb-1">{title}</h2>
-                      </a>
-                      <span>{description}</span>
-                      <div class="flex gap-2 text-xs text-neutral-400">
-                        <span>
-                          發行： <FormattedDate date={pubDate} />
-                        </span>
-                        <span>
-                          更新： <FormattedDate date={updatedDate} />
-                        </span>
-                      </div>
-                      <img src={heroImage} class="rounded-xl" />
-                      {content.length > 100 ? (
-                        <>
-                          <Markdown.Inline
-                            of={content.slice(0, content.indexOf("[[MORE]]"))}
-                          />
-                          <a
-                            class="text-amber-600 dark:text-amber-200 text-xl block mt-2 mb-1"
-                            href={`/blog/${slug}/`}
-                          >
-                            ＞閱讀更多
-                          </a>
-                        </>
-                      ) : (
-                        <Markdown.Inline of={content} />
-                      )}
-                    </li>
-                    <hr class="my-4 border-b" />
-                  </>
-                );
-              })
-            }
-          </ul>
-        </section>
-      </Article>
-    </main>
-    <Footer /> -->
   </Body>
-
 </html>
