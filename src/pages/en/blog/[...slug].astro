@@ -13,6 +13,7 @@ export async function getStaticPaths() {
   });
 
   const pages = items.map((item) => {
+    const { updatedAt } = item.sys;
     const { title, date, content, description, heroImage, slug } = item.fields;
 
     const updatedContent = content.toString().replace("[[MORE]]", "");
@@ -23,6 +24,7 @@ export async function getStaticPaths() {
         title,
         content: updatedContent,
         pubDate: new Date(date),
+        updatedDate: new Date(updatedAt),
         description,
         heroImage: (heroImage as HeroImage).fields.file.url,
       },
