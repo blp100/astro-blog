@@ -17,16 +17,16 @@ export default defineConfig({
       [
         addClasses,
         {
-          h1: "text-4xl font-bold scroll-mt-16",
-          h2: "text-2xl font-bold scroll-mt-16 text-boston-blue-700 dark:text-boston-blue-200",
-          h3: "text-xl font-bold scroll-mt-16 text-boston-blue-500 dark:text-boston-blue-300",
-          h4: "text-lg font-bold",
-          h5: "font-bold",
-          h6: "font-bold",
+          h1: "text-4xl font-bold scroll-mt-16 my-2",
+          h2: "text-2xl font-bold scroll-mt-16 text-boston-blue-700 dark:text-boston-blue-200 my-2",
+          h3: "text-xl font-bold scroll-mt-16 text-boston-blue-500 dark:text-boston-blue-300 my-2",
+          h4: "text-lg font-bold my-2",
+          h5: "font-bold my-2",
+          h6: "font-bold my-2",
           hr: "border-t-[1rem] w-52 mx-auto my-4 border-orange-200 dark:border-zinc-400 border-double",
           p: "text-lg my-2",
           blockquote:
-            "p-4 bg-amber-100 dark:bg-neutral-800 border-l-4 border-orange-200 dark:border-neutral-700",
+            "p-4 bg-amber-100 dark:bg-neutral-800 border-l-4 border-orange-200 dark:border-neutral-700 my-2",
           a: "text-amber-600 dark:text-amber-200",
         },
       ],
