@@ -1,18 +1,21 @@
 ---
+import { useTranslations } from "../../../i18n/utils";
 import Post from "../../../layouts/Post.astro";
 import { contentfulClient } from "../../../lib/contentful";
 import type { BlogPost, HeroImage } from "../../../lib/contentful";
 import { Markdown } from "@astropub/md";
 
 export async function getStaticPaths() {
+  const t = useTranslations("en");
   const { items } = await contentfulClient.getEntries<BlogPost>({
     content_type: "astroBlog",
+    locale: t("contentful.locale"),
   });
 
   const pages = items.map((item) => {
     const { title, date, content, description, heroImage, slug } = item.fields;
 
-    const updatedContent= content.toString().replace("[[MORE]]","");
+    const updatedContent = content.toString().replace("[[MORE]]", "");
 
     return {
       params: { slug },
@@ -30,6 +33,7 @@ export async function getStaticPaths() {
 
 const { content, ...data } = Astro.props;
 ---
+
 <Post {...data}>
   <Markdown.Inline of={content} />
 </Post>

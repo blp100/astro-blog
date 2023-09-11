@@ -28,7 +28,7 @@ const t = useTranslations(lang);
     </div>
     <img src={heroImage} class="rounded-xl" />
     {
-      content.length > 100 ? (
+      content.indexOf("[[MORE]]") !== -1  ? (
         <>
           <Markdown.Inline of={content.slice(0, content.indexOf("[[MORE]]"))} />
           <a
