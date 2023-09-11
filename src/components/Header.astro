@@ -15,13 +15,13 @@ const t = useTranslations(lang);
     <h2
       class="font-semibold font-righteous uppercase text-base md:text-xl tracking-tight p-2"
     >
-      <a class="inline-flex gap-1 items-center font-righteous" href="/"
+      <a class="inline-flex gap-1 items-center font-righteous" href=`/${lang}`
         ><IoLeaf className="hidden md:inline" />{SITE_TITLE}</a
       >
     </h2>
     <div class="flex-1"></div>
     <div
-      class=`items-center gap-6 hidden md:flex ${(lang=="en")?"font-righteous":""}`
+      class=`items-center gap-4 hidden md:flex ${(lang==="en")?"font-righteous":""}`
     >
       <!-- <HeaderLink href="/">{t("nav.categories")}</HeaderLink> -->
       <HeaderLink href={HOMEPAGE_URL}>{t("nav.about")}</HeaderLink>
