@@ -23,7 +23,7 @@ export const ui = {
     "nav.about": "關於我",
     "nav.categories": "目錄",
     "nav.source": "猿始碼",
-    "nav.language": "Eng".toUpperCase(),
+    "nav.language": "En".toUpperCase(),
     "nav.lang": "en",
     "contentful.locale": "zh-Hant-TW",
     "date.published": "發行：",
