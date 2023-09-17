@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 
   const pages = items.map((item) => {
     const { updatedAt } = item.sys;
-    const { title, date, content, description, heroImage, slug } = item.fields;
+    const { title, date, content, description, heroImage, slug, tags } = item.fields;
 
     const updatedContent = content.toString().replace("[[MORE]]", "");
 

@@ -1,4 +1,4 @@
-import contentful, { Asset, EntryFieldTypes } from "contentful";
+import contentful, { Asset, Entry, EntryField, EntryFieldTypes } from "contentful";
 
 export interface HeroImage {
   fields: {
@@ -7,6 +7,24 @@ export interface HeroImage {
     };
   };
 }
+
+export interface BlogCategory {
+  contentTypeId: "astroCategories";
+  fields: {
+    title: EntryFieldTypes.Text;
+    slug: EntryFieldTypes.Text;
+  };
+  sys: {
+    contentType: {
+      sys: {
+        id: string;
+      };
+    };
+  };
+}
+
+export type Category = Entry<BlogCategory>;
+
 export interface BlogPost {
   contentTypeId: "astroBlog";
   sys: {
@@ -20,6 +38,8 @@ export interface BlogPost {
     description: EntryFieldTypes.Text;
     slug: EntryFieldTypes.Text;
     heroImage: Asset & HeroImage;
+    tags: EntryFieldTypes.Text;
+    category: EntryFieldTypes.EntryLink<BlogCategory>;
   };
 }
 
