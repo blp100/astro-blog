@@ -1,6 +1,10 @@
 ---
 import { contentfulClient } from "../../../lib/contentful";
-import type { BlogPost, BlogCategory, HeroImage } from "../../../lib/contentful";
+import type {
+  BlogPost,
+  BlogCategory,
+  HeroImage,
+} from "../../../lib/contentful";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 import BlogPostList from "../../../components/BlogPostList.astro";
 import IndexLayout from "../../../layouts/IndexLayout.astro";
@@ -21,14 +25,27 @@ const entries = await contentfulClient.getEntries<BlogCategory>({
 });
 
 const posts = entries.items.map((item) => {
-  const { updatedAt } = item.sys;
+  const id = item.sys.id;
   const { title, slug } = item.fields;
-
   return {
-    title,
+    title: title.trim(),
     slug,
+    id,
   };
 });
+
+const postPromises = posts.map(async (post) => {
+  const blogEntries = await contentfulClient.getEntries<BlogPost>({
+    content_type: "astroBlog",
+    locale: t("contentful.locale"),
+    links_to_entry: post.id,
+    include: 0,
+  });
+
+  return { total: blogEntries.total, ...post };
+});
+
+const newPosts = await Promise.all(postPromises);
 ---
 
 <!DOCTYPE html>
@@ -40,14 +57,27 @@ const posts = entries.items.map((item) => {
     <Header title={SITE_TITLE} />
     <main class="pt-16">
       <Article>
-        <section>
-          <ul>
+        <section class="flex flex-col gap-4">
+          <h1
+            class="text-xl text-center underline underline-offset-8 decoration-2 text-amber-600 dark:text-amber-200"
+          >
+            Total {newPosts.length} categories
+          </h1>
+          <ul class="flex gap-4 mx-auto items-center justify-center">
             {
-              posts.map((post) => {
-                const { title } = post;
+              newPosts.map((post) => {
+                const { title, total, slug } = post;
                 return (
                   <li>
-                      <a href={`categories/${title}`}>{title}</a>
+                    <a
+                      class="text-xl relative before:absolute before:content-[' '] before:h-1 before:w-full before:rounded before:bg-amber-600 dark:before:bg-amber-200 before:-bottom-2 before:left-0 before:origin-right before:scale-x-0 hover:before:origin-left hover:before:scale-x-100 before:transition-transform duration-500"
+                      href={`categories/${slug}`}
+                    >
+                      {title}
+                    </a>
+                    <span class="relative font-bold text-base -top-[6px] text-amber-600 dark:text-amber-200">
+                      {total}
+                    </span>
                   </li>
                 );
               })

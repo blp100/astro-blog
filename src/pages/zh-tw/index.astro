@@ -12,6 +12,7 @@ const entries = await contentfulClient.getEntries<BlogPost>({
   content_type: "astroBlog",
   locale: t("contentful.locale"),
   order: ["-sys.createdAt"],
+  limit: 7,
 });
 
 const posts = entries.items.map((item) => {
