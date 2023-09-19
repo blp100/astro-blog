@@ -8,10 +8,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../../../consts";
 import { useTranslations } from "../../../i18n/utils";
 import Post from "../../../layouts/Post.astro";
 import { contentfulClient } from "../../../lib/contentful";
-import type {
-  BlogPost,
-  Category,
-} from "../../../lib/contentful";
+import type { BlogPost, Category } from "../../../lib/contentful";
 import { Markdown } from "@astropub/md";
 
 export async function getStaticPaths() {
@@ -20,10 +17,10 @@ export async function getStaticPaths() {
     content_type: "astroBlog",
     locale: t("contentful.locale"),
     order: ["-sys.createdAt"],
-    limit: 15
+    limit: 15,
   });
 
- console.log(items)
+  console.log(items);
 
   const pages = items.map((item) => {
     const { title, date, slug, category } = item.fields;
@@ -34,6 +31,7 @@ export async function getStaticPaths() {
         title,
         slug,
         pubDate: new Date(date),
+        category: (category as Category).fields.title,
       },
     };
   });
@@ -44,14 +42,15 @@ const { title, date, description, content, category } = Astro.props;
 const { slug } = Astro.params;
 
 const t = useTranslations("en");
-const entries = await contentfulClient.withoutUnresolvableLinks.getEntries<BlogPost>({
-  content_type: "astroBlog",
-  locale: t("contentful.locale"),
-  order: ["-sys.createdAt"],
-  limit: 15,
-  "fields.category.sys.contentType.sys.id": "astroCategories",
-  "fields.category.fields.slug[match]": slug,
-});
+const entries =
+  await contentfulClient.withoutUnresolvableLinks.getEntries<BlogPost>({
+    content_type: "astroBlog",
+    locale: t("contentful.locale"),
+    order: ["-sys.createdAt"],
+    limit: 15,
+    "fields.category.sys.contentType.sys.id": "astroCategories",
+    "fields.category.fields.slug[match]": slug,
+  });
 
 const posts = entries.items.map((item) => {
   const { title, date, slug, category } = item.fields;
@@ -63,7 +62,7 @@ const posts = entries.items.map((item) => {
     category: (category as Category).fields.slug,
   };
 });
-
+let recordYear: string;
 ---
 
 <!DOCTYPE html>
@@ -76,14 +75,48 @@ const posts = entries.items.map((item) => {
     <main class="pt-16">
       <Article>
         <section>
+          <h1 class="text-xl pb-4 text-neutral-500">
+            Category: <span class="text-zinc-900 dark:text-neutral-300"
+              >{category}</span
+            >
+          </h1>
           <ul>
             {
               posts.map((post) => {
-                const { title, postSlug, category } = post;
+                const { title, postSlug, pubDate } = post;
+
+                const year = pubDate.toLocaleDateString("en", {
+                  year: "numeric",
+                });
+
+                const date = pubDate
+                  .toLocaleDateString("en", {
+                    month: "2-digit",
+                    day: "2-digit",
+                  })
+                  .replace("/", ".");
+
+                const toggleYearColumn: boolean = recordYear != year;
+                recordYear = year;
+
                 return (
-                  <li>
-                    <a href={`/en/blog/${postSlug}`}>{title}</a>
-                  </li>
+                  <>
+                    {toggleYearColumn && <h2 class="text-xl pb-4">{year}</h2>}
+                    <li class="group py-2 text-xl border-l-2 hover:border-amber-600 hover:dark:border-amber-200 hover:border-l-8 transition-all duration-300 hover:translate-x-2">
+                      <time
+                        datetime={pubDate.toISOString()}
+                        class="inline-block w-20 text-center px-1 lining-nums text-neutral-500 group-hover:text-neutral-600 dark:group-hover:text-neutral-400"
+                      >
+                        {date}
+                      </time>
+                      <a
+                        class="text-amber-600 dark:text-amber-200 group-hover:text-amber-700 dark:group-hover:text-amber-100"
+                        href={`/en/blog/${postSlug}`}
+                      >
+                        {title}
+                      </a>
+                    </li>
+                  </>
                 );
               })
             }
