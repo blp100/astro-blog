@@ -1,4 +1,8 @@
-import contentful, { Asset, Entry, EntryField, EntryFieldTypes } from "contentful";
+import contentful, {
+  Asset,
+  Entry,
+  EntryFieldTypes,
+} from "contentful";
 
 export interface HeroImage {
   fields: {

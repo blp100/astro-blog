@@ -20,18 +20,17 @@ export async function getStaticPaths() {
     limit: 15,
   });
 
-  console.log(items);
-
   const pages = items.map((item) => {
     const { title, date, slug, category } = item.fields;
 
+    console.log(category);
     return {
-      params: { slug: (category as Category).fields.slug },
+      params: { slug: (category as Category)?.fields?.slug },
       props: {
         title,
         slug,
         pubDate: new Date(date),
-        category: (category as Category).fields.title,
+        category: (category as Category)?.fields?.title,
       },
     };
   });

@@ -3,7 +3,8 @@ import { contentfulClient } from "../../lib/contentful";
 import type { BlogPost, HeroImage } from "../../lib/contentful";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import BlogPostList from "../../components/BlogPostList.astro";
-import IndexLayout from "../../layouts/IndexLayout.astro";
+import IndexLayout from "../../layouts/MainLayout.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -12,12 +13,13 @@ const entries = await contentfulClient.getEntries<BlogPost>({
   content_type: "astroBlog",
   locale: t("contentful.locale"),
   order: ["-sys.createdAt"],
-  limit: 7,
+  limit: 15,
 });
 
 const posts = entries.items.map((item) => {
   const { updatedAt } = item.sys;
   const { title, date, description, slug, heroImage, content } = item.fields;
+
   return {
     title,
     slug,
@@ -30,7 +32,7 @@ const posts = entries.items.map((item) => {
 });
 ---
 
-<IndexLayout>
+<MainLayout>
   {
     posts.map((post) => {
       const {
@@ -56,4 +58,4 @@ const posts = entries.items.map((item) => {
       );
     })
   }
-</IndexLayout>
+</MainLayout>
