@@ -1,0 +1,31 @@
+---
+const { lang, title, slug, pubDate, toggleYearColumn, year } = Astro.props;
+
+const date = pubDate
+  .toLocaleDateString(lang, {
+    month: "2-digit",
+    day: "2-digit",
+  })
+  .replace("/", ".");
+
+---
+
+<>
+  {toggleYearColumn && <h2 class="text-xl pb-4">{year}</h2>}
+  <li
+    class="py-2 text-xl border-l-2 hover:border-amber-600 hover:dark:border-amber-200 hover:border-l-8 transition-all duration-300 hover:translate-x-2"
+  >
+    <time
+      datetime={pubDate.toISOString()}
+      class="inline-block w-20 text-center px-1 lining-nums text-neutral-500 group-hover:text-neutral-600 dark:group-hover:text-neutral-400"
+    >
+      {date}
+    </time>
+    <a
+      class="text-amber-600 dark:text-amber-200 group-hover:text-amber-700 dark:group-hover:text-amber-100"
+      href={`/${lang}/blog/${slug}`}
+    >
+      {title}
+    </a>
+  </li>
+</>
