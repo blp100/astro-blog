@@ -44,7 +44,7 @@ const addedNumberPosts = await Promise.all(postPromises);
     {
       addedNumberPosts.map((post: any) => {
         const { title, total, slug } = post;
-        return <CategoryList title={title} total={total} slug={slug} />;
+        return <CategoryList lang={lang} title={title} total={total} slug={slug} />;
       })
     }
   </CategoriesLayout>
