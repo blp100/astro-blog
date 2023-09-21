@@ -1,0 +1,89 @@
+---
+import { useTranslations } from "../../../i18n/utils";
+import CategoryLayout from "../../../layouts/CategoryLayout.astro";
+import MainLayout from "../../../layouts/MainLayout.astro";
+import { contentfulClient } from "../../../lib/contentful";
+import type { BlogPost, Category } from "../../../lib/contentful";
+import CategoryElement from "../../../components/CategoryElement.astro";
+
+export async function getStaticPaths() {
+  const t = useTranslations("zh-tw");
+  const { items } = await contentfulClient.getEntries<BlogPost>({
+    content_type: "astroBlog",
+    locale: t("contentful.locale"),
+    order: ["-sys.createdAt"],
+    limit: 15,
+  });
+
+  const pages = items.map((item) => {
+    const { title, date, slug, category } = item.fields;
+    return {
+      params: { slug: (category as Category)?.fields?.slug },
+      props: {
+        title,
+        slug,
+        pubDate: new Date(date),
+        category: (category as Category)?.fields?.title,
+      },
+    };
+  });
+  return pages;
+}
+
+const { title, date, description, content, category } = Astro.props;
+const { slug } = Astro.params;
+
+const lang="zh-tw";
+const t = useTranslations(lang);
+const entries =
+  await contentfulClient.withoutUnresolvableLinks.getEntries<BlogPost>({
+    content_type: "astroBlog",
+    locale: t("contentful.locale"),
+    order: ["-sys.createdAt"],
+    limit: 15,
+    "fields.category.sys.contentType.sys.id": "astroCategories",
+    "fields.category.fields.slug[match]": slug,
+  });
+
+const posts = entries.items.map((item) => {
+  const { title, date, slug, category } = item.fields;
+
+  return {
+    title,
+    postSlug: slug,
+    pubDate: new Date(date),
+    category: (category as Category).fields.slug,
+  };
+});
+let recordYear: string;
+
+console.log(lang);
+---
+
+<MainLayout>
+  <CategoryLayout category={category}>
+    {
+      posts.map((post) => {
+        const { title, postSlug, pubDate } = post;
+
+        const year = pubDate.toLocaleDateString(lang, {
+          year: "numeric",
+        });
+
+        const toggleYearColumn: boolean = recordYear != year;
+        recordYear = year;
+
+        return (
+          <CategoryElement
+            lang={lang}
+            title={title}
+            slug={postSlug}
+            pubDate={pubDate}
+            toggleYearColumn={toggleYearColumn}
+            year={year}
+          />
+        );
+      })
+    }
+  </CategoryLayout>
+</MainLayout>
