@@ -59,7 +59,7 @@ let recordYear: string;
 ---
 
 <MainLayout>
-  <CategoryLayout category={category}>
+  <CategoryLayout lang={lang} category={category}>
     {
       posts.map((post) => {
         const { title, postSlug, pubDate } = post;
