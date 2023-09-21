@@ -40,7 +40,7 @@ const addedNumberPosts = await Promise.all(postPromises);
 ---
 
 <MainLayout>
-  <CategoriesLayout postsLength={addedNumberPosts.length}>
+  <CategoriesLayout lang={lang} postsLength={addedNumberPosts.length}>
     {
       addedNumberPosts.map((post: any) => {
         const { title, total, slug } = post;

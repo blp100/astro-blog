@@ -1,13 +1,18 @@
 ---
-const {
-  postsLength
-} = Astro.props;
+import { useTranslations } from "../i18n/utils";
+const { lang, postsLength } = Astro.props;
+const t = useTranslations(lang);
+
+const titles = t("categories.list").split(" ");
+
+const totalCategories = titles.join(" " + postsLength + " ");
 ---
+
 <>
   <h1
     class="mt-8 mb-4 text-xl text-center underline underline-offset-8 decoration-2 text-amber-600 dark:text-amber-200"
   >
-    Total {postsLength} categories
+    {totalCategories}
   </h1>
   <ul class="my-4 flex gap-4 mx-auto items-center justify-center">
     <slot />

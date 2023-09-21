@@ -18,6 +18,7 @@ export const ui = {
     "date.published": "Published",
     "date.updated": "Updated",
     "index.readMore": ">> Read More",
+    "categories.list": "Total categories",
   },
   "zh-tw": {
     "nav.home": "首頁",
@@ -31,5 +32,6 @@ export const ui = {
     "date.published": "發行：",
     "date.updated": "更新：",
     "index.readMore": "＞　閱讀更多",
+    "categories.list": "總計 個分類",
   },
 } as const;

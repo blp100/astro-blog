@@ -33,7 +33,7 @@ export async function getStaticPaths() {
 const { title, date, description, content, category } = Astro.props;
 const { slug } = Astro.params;
 
-const lang="zh-tw";
+const lang = "zh-tw";
 const t = useTranslations(lang);
 const entries =
   await contentfulClient.withoutUnresolvableLinks.getEntries<BlogPost>({
@@ -56,8 +56,6 @@ const posts = entries.items.map((item) => {
   };
 });
 let recordYear: string;
-
-console.log(lang);
 ---
 
 <MainLayout>

@@ -7,7 +7,7 @@ import type { BlogPost, Category } from "../../../lib/contentful";
 import CategoryElement from "../../../components/CategoryElement.astro";
 
 export async function getStaticPaths() {
-  const t = useTranslations("zh-tw");
+  const t = useTranslations("en");
   const { items } = await contentfulClient.getEntries<BlogPost>({
     content_type: "astroBlog",
     locale: t("contentful.locale"),
@@ -33,7 +33,7 @@ export async function getStaticPaths() {
 const { title, date, description, content, category } = Astro.props;
 const { slug } = Astro.params;
 
-const lang="en";
+const lang = "en";
 const t = useTranslations(lang);
 const entries =
   await contentfulClient.withoutUnresolvableLinks.getEntries<BlogPost>({
