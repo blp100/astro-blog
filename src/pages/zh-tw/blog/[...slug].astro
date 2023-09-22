@@ -17,6 +17,7 @@ export async function getStaticPaths() {
     const { title, date, content, description, heroImage, slug } = item.fields;
 
     const updatedContent = content.toString().replace("[[MORE]]", "");
+    const image = (heroImage as HeroImage);
 
     return {
       params: { slug },
@@ -26,7 +27,8 @@ export async function getStaticPaths() {
         pubDate: new Date(date),
         updatedDate: new Date(updatedAt),
         description,
-        heroImage: (heroImage as HeroImage).fields.file.url,
+        heroImage: image.fields.file.url,
+        imageDescription: image.fields.description,
       },
     };
   });

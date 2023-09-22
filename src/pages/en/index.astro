@@ -18,6 +18,7 @@ const entries = await contentfulClient.getEntries<BlogPost>({
 const posts = entries.items.map((item) => {
   const { updatedAt } = item.sys;
   const { title, date, description, slug, heroImage, content } = item.fields;
+
   return {
     title,
     slug,

@@ -1,13 +1,15 @@
 import contentful, {
   Asset,
   Entry,
+  EntryFieldType,
   EntryFieldTypes,
 } from "contentful";
 
 export interface HeroImage {
   fields: {
+    description: EntryFieldTypes.Text;
     file: {
-      url: string;
+      url: EntryFieldTypes.Text;
     };
   };
 }
@@ -21,7 +23,7 @@ export interface BlogCategory {
   sys: {
     contentType: {
       sys: {
-        id: string;
+        id: EntryFieldTypes.Text;
       };
     };
   };
@@ -41,7 +43,7 @@ export interface BlogPost {
     date: EntryFieldTypes.Date;
     description: EntryFieldTypes.Text;
     slug: EntryFieldTypes.Text;
-    heroImage: Asset & HeroImage;
+    heroImage: Asset;
     tags: EntryFieldTypes.Text;
     category: EntryFieldTypes.EntryLink<BlogCategory>;
   };

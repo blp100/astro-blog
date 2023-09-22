@@ -5,10 +5,22 @@ import Footer from "../components/Footer.astro";
 import Body from "../components/Body.astro";
 import Article from "../components/Article.astro";
 import BlogDate from "../components/BlogDate.astro";
+import { TbExternalLink } from "react-icons/tb";
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  imageDescription,
+} = Astro.props;
+
+const imageSourceURL = imageDescription.slice(imageDescription.indexOf("http"));
+const imageText = imageDescription.replace(imageSourceURL, "");
 ---
 
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
   <head>
     <BaseHead title={title} description={description} />
@@ -27,8 +39,21 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
         <div class="flex gap-3 text-xs text-neutral-500">
           <BlogDate pubDate={pubDate} updatedDate={updatedDate} />
         </div>
-        <div class="mb-4">
-          <img class="rounded-lg" height={510} src={heroImage} alt="" />
+        <div>
+          <img
+            class="rounded-lg"
+            height={510}
+            src={heroImage}
+            alt={imageText}
+          />
+          <p class="py-2 text-xs text-neutral-500">
+            <span>
+              {imageText}
+            </span>
+            <a class="block pt-1 text-neutral-400" href={imageSourceURL} target="_blank"
+              >Source: <TbExternalLink className="inline-block" /></a
+            >
+          </p>
         </div>
         <slot />
         <span
