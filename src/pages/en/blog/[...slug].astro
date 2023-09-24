@@ -6,7 +6,8 @@ import type { BlogPost, HeroImage } from "../../../lib/contentful";
 import { Markdown } from "@astropub/md";
 
 export async function getStaticPaths() {
-  const t = useTranslations("en");
+  const lang = "en";
+  const t = useTranslations(lang);
   const { items } = await contentfulClient.getEntries<BlogPost>({
     content_type: "astroBlog",
     locale: t("contentful.locale"),
@@ -22,12 +23,14 @@ export async function getStaticPaths() {
     return {
       params: { slug },
       props: {
+        lang,
         title,
         content: updatedContent,
         pubDate: new Date(date),
         updatedDate: new Date(updatedAt),
         description,
         heroImage: image.fields.file.url,
+        tags,
         imageDescription: image.fields.description,
       },
     };

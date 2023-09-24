@@ -14,6 +14,20 @@ export interface HeroImage {
   };
 }
 
+export interface BlogTags{
+  contentTypeId: "astroTags";
+  fields: {
+    title: EntryFieldTypes.Text;
+    slug: EntryFieldTypes.Text;
+  };
+  sys: {
+    contentType: {
+      sys: {
+        id: EntryFieldTypes.Text;
+      };
+    };
+  };
+}
 export interface BlogCategory {
   contentTypeId: "astroCategories";
   fields: {
@@ -31,6 +45,9 @@ export interface BlogCategory {
 
 export type Category = Entry<BlogCategory>;
 
+export type Tags = Array<Entry<BlogTags>>;
+export type TagType = Entry<BlogTags>;
+
 export interface BlogPost {
   contentTypeId: "astroBlog";
   sys: {
@@ -44,7 +61,7 @@ export interface BlogPost {
     description: EntryFieldTypes.Text;
     slug: EntryFieldTypes.Text;
     heroImage: Asset;
-    tags: EntryFieldTypes.Text;
+    tags: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<BlogTags>>;
     category: EntryFieldTypes.EntryLink<BlogCategory>;
   };
 }

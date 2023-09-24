@@ -1,0 +1,26 @@
+---
+import { useTranslations } from "../i18n/utils";
+const { lang, postsLength } = Astro.props;
+const t = useTranslations(lang);
+
+const url = Astro.url;
+const [, , pathRepo] = url.pathname.split("/");
+
+const titles =
+  pathRepo === "categories" ? t("categories.list").split(" ") : t("tag.list").split(" ");
+
+const totalNames = titles.join(" " + postsLength + " ");
+---
+
+<>
+  <h1
+    class="mt-8 mb-4 text-xl text-center underline underline-offset-8 decoration-2 text-amber-600 dark:text-amber-200"
+  >
+    {totalNames}
+  </h1>
+  <ul
+    class="my-4 max-w-3xl flex flex-wrap gap-4 mx-auto items-center justify-center"
+  >
+    <slot />
+  </ul>
+</>

@@ -4,7 +4,7 @@ import type { BlogPost, BlogCategory } from "../../../lib/contentful";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 import MainLayout from "../../../layouts/MainLayout.astro";
 import CategoryList from "../../../components/CategoryList.astro";
-import CategoriesLayout from "../../../layouts/CategoriesLayout.astro";
+import FilterLayout from "../../../layouts/FilterLayout.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -40,12 +40,12 @@ const addedNumberPosts = await Promise.all(postPromises);
 ---
 
 <MainLayout>
-  <CategoriesLayout lang={lang} postsLength={addedNumberPosts.length}>
+  <FilterLayout lang={lang} postsLength={addedNumberPosts.length}>
     {
       addedNumberPosts.map((post: any) => {
         const { title, total, slug } = post;
         return <CategoryList lang={lang} title={title} total={total} slug={slug} />;
       })
     }
-  </CategoriesLayout>
+  </FilterLayout>
 </MainLayout>

@@ -14,7 +14,7 @@ const t = useTranslations(lang);
   <span class="hidden translate-y-0 -translate-y-16"></span>
   <nav class="mx-auto flex max-w-5xl items-center gap-3 text-base">
     <h2
-      class="font-semibold font-righteous uppercase text-sm md:text-xl tracking-tight p-2"
+      class="font-semibold font-righteous uppercase text-sm md:text-base lg:text-xl tracking-tight p-2"
     >
       <a class="inline-flex gap-1 items-center font-righteous" href=`/${lang}`
         ><IoLeaf className="hidden md:inline" />{SITE_TITLE}</a
@@ -26,6 +26,9 @@ const t = useTranslations(lang);
     >
       <HeaderLink href={t("nav.categoriesURL")}>
         {t("nav.categories")}
+      </HeaderLink>
+      <HeaderLink href={t("nav.tagsURL")}>
+        {t("nav.tags")}
       </HeaderLink>
       <HeaderLink href={HOMEPAGE_URL}>{t("nav.about")}</HeaderLink>
       <HeaderLink href="https://github.com/blp100/astro-blog">
@@ -60,7 +63,6 @@ window.addEventListener("scroll", () => {
     header.classList.remove(scrollDown);
     header.classList.add(scrollUp);
   }
-  console.log(lastScroll,currentScroll);
   lastScroll = currentScroll;
 });
 </script>

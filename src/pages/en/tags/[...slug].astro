@@ -3,37 +3,37 @@ import { useTranslations } from "../../../i18n/utils";
 import FilteredListLayout from "../../../layouts/FilteredListLayout.astro";
 import MainLayout from "../../../layouts/MainLayout.astro";
 import { contentfulClient } from "../../../lib/contentful";
-import type { BlogPost, Category } from "../../../lib/contentful";
+import type { BlogPost, BlogTags, Category, Tags } from "../../../lib/contentful";
 import FilteredList from "../../../components/FilteredList.astro";
 
 export async function getStaticPaths() {
-  const t = useTranslations("zh-tw");
-  const { items } = await contentfulClient.getEntries<BlogPost>({
-    content_type: "astroBlog",
+  const t = useTranslations("en");
+  const { items } = await contentfulClient.getEntries<BlogTags>({
+    content_type: "astroTags",
     locale: t("contentful.locale"),
     order: ["-sys.createdAt"],
     limit: 15,
   });
 
   const pages = items.map((item) => {
-    const { title, date, slug, category } = item.fields;
+    const { title, slug } = item.fields;
+    const id = item.sys.id;
     return {
-      params: { slug: (category as Category)?.fields?.slug },
+      params: { slug: slug },
       props: {
         title,
         slug,
-        pubDate: new Date(date),
-        category: (category as Category)?.fields?.title,
+        id,
       },
     };
   });
   return pages;
 }
 
-const { title, date, description, content, category } = Astro.props;
+const { title, id } = Astro.props;
 const { slug } = Astro.params;
 
-const lang = "zh-tw";
+const lang = "en";
 const t = useTranslations(lang);
 const entries =
   await contentfulClient.withoutUnresolvableLinks.getEntries<BlogPost>({
@@ -41,13 +41,12 @@ const entries =
     locale: t("contentful.locale"),
     order: ["-sys.createdAt"],
     limit: 15,
-    "fields.category.sys.contentType.sys.id": "astroCategories",
-    "fields.category.fields.slug[match]": slug,
+    links_to_entry: id,
   });
-
+  
 const posts = entries.items.map((item) => {
   const { title, date, slug, category } = item.fields;
-
+    const id = item.sys.id;
   return {
     title,
     postSlug: slug,
@@ -59,7 +58,7 @@ let recordYear: string;
 ---
 
 <MainLayout>
-  <FilteredListLayout lang={lang} category={category}>
+  <FilteredListLayout lang={lang}>
     {
       posts.map((post) => {
         const { title, postSlug, pubDate } = post;

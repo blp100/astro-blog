@@ -1,0 +1,21 @@
+---
+import { useTranslations } from "../i18n/utils";
+const { lang, category } = Astro.props;
+const t = useTranslations(lang);
+
+const url = Astro.url;
+const [, , pathRepo] = url.pathname.split("/");
+
+const title =
+  pathRepo === "categories" ? t("category.name") : t("tag.name");
+
+---
+<>
+  <h1 class="text-xl pb-4 text-neutral-500">
+    {title}<span class="text-zinc-900 dark:text-neutral-300">{category}</span
+    >
+  </h1>
+  <ul>
+    <slot />
+  </ul>
+</>

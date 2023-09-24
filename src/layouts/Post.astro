@@ -6,14 +6,17 @@ import Body from "../components/Body.astro";
 import Article from "../components/Article.astro";
 import BlogDate from "../components/BlogDate.astro";
 import { TbExternalLink } from "react-icons/tb";
+import type { TagType } from "../lib/contentful";
 
 const {
+  lang,
   title,
   description,
   pubDate,
   updatedDate,
   heroImage,
   imageDescription,
+  tags,
 } = Astro.props;
 
 const imageSourceURL = imageDescription.slice(imageDescription.indexOf("http"));
@@ -50,12 +53,26 @@ const imageText = imageDescription.replace(imageSourceURL, "");
             <span>
               {imageText}
             </span>
-            <a class="block pt-1 text-neutral-400" href={imageSourceURL} target="_blank"
+            <a
+              class="block pt-1 text-neutral-400"
+              href={imageSourceURL}
+              target="_blank"
               >Source: <TbExternalLink className="inline-block" /></a
             >
           </p>
         </div>
         <slot />
+        <hr
+          class="border-t-2 w-full mx-auto my-4 border-orange-200 dark:border-zinc-400"
+        />
+        <div class="flex gap-1 text-lg text-amber-600 dark:text-amber-200">
+          {
+            tags.map((tag: TagType) => {
+              const { title, slug } = tag.fields;
+              return <a class="px-2 transition-all ease-in-out duration-500 shadow-[inset_0_0_0_0] shadow-neutral-50 hover:shadow-[inset_0_-50px_0_0] hover:shadow-amber-600 hover:text-neutral-50" href={`/${lang}/tags/${slug}`}>{"#" + title}</a>;
+            })
+          }
+        </div>
         <span
           class="underline underline-offset-2 hover:text-orange-500 decoration-orange-500 text-lg list-disc hidden"
         ></span>

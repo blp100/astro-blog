@@ -1,18 +1,17 @@
 ---
 import { contentfulClient } from "../../../lib/contentful";
-import type { BlogPost, BlogCategory } from "../../../lib/contentful";
+import type { BlogPost, BlogTags } from "../../../lib/contentful";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 import MainLayout from "../../../layouts/MainLayout.astro";
-import CategoryList from "../../../components/CategoryList.astro";
+import TagList from "../../../components/TagList.astro";
 import FilterLayout from "../../../layouts/FilterLayout.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const entries = await contentfulClient.getEntries<BlogCategory>({
-  content_type: "astroCategories",
+const entries = await contentfulClient.getEntries<BlogTags>({
+  content_type: "astroTags",
   locale: t("contentful.locale"),
-  order: ["-sys.createdAt"],
 });
 
 const posts = entries.items.map((item) => {
@@ -32,7 +31,6 @@ const postPromises = posts.map(async (post) => {
     links_to_entry: post.id,
     include: 0,
   });
-
   return { total: blogEntries.total, ...post };
 });
 
@@ -44,7 +42,7 @@ const addedNumberPosts = await Promise.all(postPromises);
     {
       addedNumberPosts.map((post: any) => {
         const { title, total, slug } = post;
-        return <CategoryList lang={lang} title={title} total={total} slug={slug} />;
+        return <TagList lang={lang} title={title} total={total} slug={slug} />;
       })
     }
   </FilterLayout>
