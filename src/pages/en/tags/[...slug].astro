@@ -3,7 +3,7 @@ import { useTranslations } from "../../../i18n/utils";
 import FilteredListLayout from "../../../layouts/FilteredListLayout.astro";
 import MainLayout from "../../../layouts/MainLayout.astro";
 import { contentfulClient } from "../../../lib/contentful";
-import type { BlogPost, BlogTags, Category, Tags } from "../../../lib/contentful";
+import type { BlogPost, BlogTags } from "../../../lib/contentful";
 import FilteredList from "../../../components/FilteredList.astro";
 
 export async function getStaticPaths() {
@@ -43,25 +43,24 @@ const entries =
     limit: 15,
     links_to_entry: id,
   });
-  
+
 const posts = entries.items.map((item) => {
-  const { title, date, slug, category } = item.fields;
-    const id = item.sys.id;
+  const { title, date, slug } = item.fields;
+  const id = item.sys.id;
   return {
-    title,
+    blogTitle: title,
     postSlug: slug,
     pubDate: new Date(date),
-    category: (category as Category).fields.slug,
   };
 });
 let recordYear: string;
 ---
 
 <MainLayout>
-  <FilteredListLayout lang={lang}>
+  <FilteredListLayout lang={lang} title={title}>
     {
       posts.map((post) => {
-        const { title, postSlug, pubDate } = post;
+        const { blogTitle, postSlug, pubDate } = post;
 
         const year = pubDate.toLocaleDateString(lang, {
           year: "numeric",
@@ -73,7 +72,7 @@ let recordYear: string;
         return (
           <FilteredList
             lang={lang}
-            title={title}
+            title={blogTitle}
             slug={postSlug}
             pubDate={pubDate}
             toggleYearColumn={toggleYearColumn}

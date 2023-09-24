@@ -49,7 +49,7 @@ const posts = entries.items.map((item) => {
   const { title, date, slug, category } = item.fields;
 
   return {
-    title,
+    blogTitle: title,
     postSlug: slug,
     pubDate: new Date(date),
     category: (category as Category).fields.slug,
@@ -59,10 +59,10 @@ let recordYear: string;
 ---
 
 <MainLayout>
-  <FilteredListLayout lang={lang} category={category}>
+  <FilteredListLayout lang={lang} title={title}>
     {
       posts.map((post) => {
-        const { title, postSlug, pubDate } = post;
+        const { blogTitle, postSlug, pubDate } = post;
 
         const year = pubDate.toLocaleDateString(lang, {
           year: "numeric",
@@ -74,7 +74,7 @@ let recordYear: string;
         return (
           <FilteredList
             lang={lang}
-            title={title}
+            title={blogTitle}
             slug={postSlug}
             pubDate={pubDate}
             toggleYearColumn={toggleYearColumn}
