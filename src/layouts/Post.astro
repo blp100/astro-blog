@@ -16,6 +16,8 @@ const {
   updatedDate,
   heroImage,
   imageDescription,
+  categorySlug,
+  categoryTitle,
   tags,
 } = Astro.props;
 
@@ -32,19 +34,25 @@ const imageText = imageDescription.replace(imageSourceURL, "");
   <Body>
     <Header />
     <main class="pt-16">
-      <Article className="flex flex-col gap-2">
+      <Article className="flex flex-col gap-1">
         <h1
           class="text-4xl font-bold text-boston-blue-800 dark:text-boston-blue-100 mb-1"
         >
           {title}
         </h1>
         <div>{description}</div>
-        <div class="flex gap-3 text-xs text-neutral-500">
+        <a
+          class="block mr-auto text-amber-600 dark:text-amber-200 transition-all ease-in-out duration-500 shadow-[inset_0_0_0_0] shadow-neutral-50 hover:shadow-[inset_0_-50px_0_0] hover:shadow-amber-600 hover:text-neutral-50 dark:hover:shadow-amber-200 dark:hover:text-neutral-900"
+          href={`/${lang}/categories/${categorySlug}/`}
+        >
+          {categoryTitle}
+        </a>
+        <div class="flex gap-2 text-neutral-400">
           <BlogDate pubDate={pubDate} updatedDate={updatedDate} />
         </div>
         <div>
           <img
-            class="rounded-lg"
+            class="rounded-xl"
             height={510}
             src={heroImage}
             alt={imageText}
@@ -69,7 +77,14 @@ const imageText = imageDescription.replace(imageSourceURL, "");
           {
             tags.map((tag: TagType) => {
               const { title, slug } = tag.fields;
-              return <a class="px-2 transition-all ease-in-out duration-500 shadow-[inset_0_0_0_0] shadow-neutral-50 hover:shadow-[inset_0_-50px_0_0] hover:shadow-amber-600 hover:text-neutral-50" href={`/${lang}/tags/${slug}`}>{"#" + title}</a>;
+              return (
+                <a
+                  class="px-2 transition-all ease-in-out duration-500 shadow-[inset_0_0_0_0] shadow-neutral-50 hover:shadow-[inset_0_-50px_0_0] hover:shadow-amber-600 hover:text-neutral-50 dark:hover:shadow-amber-200 dark:hover:text-neutral-900"
+                  href={`/${lang}/tags/${slug}`}
+                >
+                  {"#" + title}
+                </a>
+              );
             })
           }
         </div>

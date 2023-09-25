@@ -1,6 +1,6 @@
 ---
 import { contentfulClient } from "../../lib/contentful";
-import type { BlogPost, HeroImage } from "../../lib/contentful";
+import type { BlogPost, Category, HeroImage } from "../../lib/contentful";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import BlogPostList from "../../components/BlogPostList.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
@@ -17,7 +17,9 @@ const entries = await contentfulClient.getEntries<BlogPost>({
 
 const posts = entries.items.map((item) => {
   const { updatedAt } = item.sys;
-  const { title, date, description, slug, heroImage, content } = item.fields;
+  const { title, date, description, slug, heroImage, content, category } = item.fields;
+
+  console.log(category);
 
   return {
     title,
@@ -27,6 +29,8 @@ const posts = entries.items.map((item) => {
     pubDate: new Date(date),
     updatedDate: new Date(updatedAt),
     content: content.toString(),
+    categorySlug: (category as Category).fields.slug,
+    categoryTitle: (category as Category).fields.title,
   };
 });
 ---
@@ -42,6 +46,8 @@ const posts = entries.items.map((item) => {
         description,
         heroImage,
         content,
+        categorySlug,
+        categoryTitle,
       } = post;
       return (
         <BlogPostList
@@ -53,6 +59,8 @@ const posts = entries.items.map((item) => {
           description={description}
           heroImage={heroImage}
           content={content}
+          categorySlug={categorySlug}
+          categoryTitle={categoryTitle}
         />
       );
     })
