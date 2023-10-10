@@ -5,6 +5,7 @@ import { IoLeaf, IoLogoGithub } from "react-icons/io5";
 import ThemeToggle from "./ThemeToggleBotton";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import LanguagePicker from "./LanguagePicker.astro";
+import DropDownMenu from "./DropDownMenu";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -37,6 +38,7 @@ const t = useTranslations(lang);
     </div>
     <LanguagePicker />
     <ThemeToggle client:load />
+    <DropDownMenu lang={lang} client:load />
   </nav>
 </header>
 
