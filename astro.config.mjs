@@ -28,6 +28,8 @@ export default defineConfig({
           blockquote:
             "p-4 bg-amber-50 dark:bg-neutral-800 border-l-4 border-orange-200 dark:border-neutral-700 my-2",
           a: "text-amber-600 dark:text-amber-200",
+          ol: "px-6 p-2 list-decimal",
+          // ul: "list-disc",
         },
       ],
     ],
