@@ -58,7 +58,7 @@ module.exports = {
     "dark:text-amber-200",
     //list
     "list-decimal",
-    "px-6",
+    "list-inside",
     "p-2",
   ],
   theme: {
