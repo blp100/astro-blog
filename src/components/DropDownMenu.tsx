@@ -17,7 +17,7 @@ const DropdownMenu = ({ lang }: Props) => {
     <Menu as="div" className="relative inline-block text-left md:hidden">
       <div>
         <Menu.Button
-          className="inline-flex justify-center rounded-md border border-zinc-400 dark:border-zinc-700 px-2 py-2 text-sm font-medium shadow-sm hover:bg-orange-200 dark:hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100 transition-all"
+          className="inline-flex justify-center rounded-full border border-neutral-300 dark:border-zinc-700 px-2 py-2 text-sm font-medium shadow-sm hover:bg-orange-200 dark:hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100 transition-all"
           aria-label="menu"
         >
           <IoMenu className="h-5 w-5" />
@@ -33,7 +33,7 @@ const DropdownMenu = ({ lang }: Props) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md border border-zinc-400 dark:border-zinc-700 bg-orange-50 dark:bg-zinc-800 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none divide-zinc-400 dark:divide-zinc-700">
+        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md border border-neutral-200 dark:border-neutral-700 bg-ivory dark:bg-neutral-800 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none divide-neutral-200 dark:divide-neutral-700">
           <div className="py-1">
             <DropdownMenuItem href={t("nav.categoriesURL")}>
               {t("nav.categories")}

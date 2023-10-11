@@ -38,7 +38,7 @@ const ThemeToggle = () => {
   }, []);
 
   return isMounted ? (
-    <div className="inline-flex p-1 items-center rounded-3xl bg-neutral-200 dark:bg-amber-200 hover:bg-neutral-400 dark:hover:bg-amber-100 ">
+    <div className="inline-flex p-0.5 items-center rounded-full bg-neutral-200 dark:bg-amber-200 hover:bg-neutral-400 dark:hover:bg-amber-100 ">
       {themes.map((t) => {
         const checked = t === theme;
         return (
@@ -46,7 +46,7 @@ const ThemeToggle = () => {
             key={t}
             className={`${
               checked ? "text-neutral-900" : "hidden"
-            } cursor-pointer rounded-3xl p-2`}
+            } cursor-pointer rounded-full p-2`}
             onClick={toggleTheme}
             aria-label="Toggle theme"
           >

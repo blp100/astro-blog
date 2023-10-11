@@ -7,7 +7,7 @@ const t = useTranslations(lang);
 const updatedPath = Astro.url.pathname.replace(lang, t("nav.lang"));
 ---
 
-<div class="inline-flex items-center">
+<div class="inline-flex items-center p-2">
   <a
     class=`${(lang==="zh-tw"?"font-righteous":"font-notoSans font-bold mb-0.5")}`
     href={updatedPath}
