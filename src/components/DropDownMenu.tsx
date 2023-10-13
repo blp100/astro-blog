@@ -49,16 +49,6 @@ const DropdownMenu = ({ lang }: Props) => {
               {t("nav.source")}
             </DropdownMenuItem>
           </div>
-
-          {/* <HeaderLink href={t("nav.categoriesURL")}>
-            {t("nav.categories")}
-          </HeaderLink>
-          <HeaderLink href={t("nav.tagsURL")}>{t("nav.tags")}</HeaderLink>
-          <HeaderLink href={HOMEPAGE_URL}>{t("nav.about")}</HeaderLink>
-          <HeaderLink href="https://github.com/blp100/astro-blog">
-            <IoLogoGithub size={24} className="mb-0.5" />
-            {t("nav.source")}
-          </HeaderLink> */}
         </Menu.Items>
       </Transition>
     </Menu>

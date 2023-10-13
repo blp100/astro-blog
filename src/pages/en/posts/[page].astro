@@ -1,0 +1,119 @@
+---
+import { contentfulClient } from "../../../lib/contentful";
+import type { BlogPost, Category, HeroImage } from "../../../lib/contentful";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+import BlogPostList from "../../../components/BlogPostList.astro";
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+export async function getStaticPaths({ paginate }) {
+  const t = useTranslations("en");
+  const { items } = await contentfulClient.getEntries<BlogPost>({
+    content_type: "astroBlog",
+    locale: t("contentful.locale"),
+    order: ["-sys.createdAt"],
+    include: 1,
+  });
+
+  return paginate(items, { pageSize: 2 });
+  // const posts = items.map((item) => {
+  //   const { updatedAt } = item.sys;
+  //   const { title, date, description, slug, heroImage, content, category } =
+  //     item.fields;
+
+  //   console.log(category);
+
+  //   return {
+  //     title,
+  //     slug,
+  //     description,
+  //     heroImage: (heroImage as HeroImage).fields.file.url,
+  //     pubDate: new Date(date),
+  //     updatedDate: new Date(updatedAt),
+  //     content: content.toString(),
+  //     categorySlug: (category as Category).fields.slug,
+  //     categoryTitle: (category as Category).fields.title,
+  //   };
+  // })
+}
+
+const { page } = Astro.props;
+
+const { url } = page;
+
+const prevPath = url.prev?.indexOf("page/1") !== -1 ? "/" + lang : url.prev;
+
+const posts = page.data.map((item: any) => {
+  const { updatedAt } = item.sys;
+  const { title, date, description, slug, heroImage, content, category } =
+    item.fields;
+
+  return {
+    title,
+    slug,
+    description,
+    heroImage: (heroImage as HeroImage).fields.file.url,
+    pubDate: new Date(date),
+    updatedDate: new Date(updatedAt),
+    content: content.toString(),
+    categorySlug: (category as Category).fields.slug,
+    categoryTitle: (category as Category).fields.title,
+  };
+});
+---
+
+<MainLayout>
+  {
+    posts.map((post: any) => {
+      const {
+        slug,
+        title,
+        updatedDate,
+        pubDate,
+        description,
+        heroImage,
+        content,
+        categorySlug,
+        categoryTitle,
+      } = post;
+      return (
+        <BlogPostList
+          lang={lang}
+          slug={slug}
+          title={title}
+          updatedDate={updatedDate}
+          pubDate={pubDate}
+          description={description}
+          heroImage={heroImage}
+          content={content}
+          categorySlug={categorySlug}
+          categoryTitle={categoryTitle}
+        />
+      );
+    })
+  }
+  <div class="flex justify-between">
+    {
+      url.prev && (
+        <a
+          class="text-amber-600 dark:text-amber-200 text-xl block mt-2 mb-1"
+          href={prevPath}
+        >
+          Newer Posts
+        </a>
+      )
+    }
+    {
+      url.next && (
+        <a
+          class="text-amber-600 dark:text-amber-200 text-xl block mt-2 mb-1"
+          href={url.next}
+        >
+          Older Posts
+        </a>
+      )
+    }
+  </div>
+</MainLayout>

@@ -10,14 +10,15 @@ const t = useTranslations(lang);
 
 const entries = await contentfulClient.getEntries<BlogPost>({
   content_type: "astroBlog",
-  locale:  t("contentful.locale"),
+  locale: t("contentful.locale"),
   order: ["-sys.createdAt"],
-  limit: 7,
+  limit: 3,
 });
 
 const posts = entries.items.map((item) => {
   const { updatedAt } = item.sys;
-  const { title, date, description, slug, heroImage, content, category } = item.fields;
+  const { title, date, description, slug, heroImage, content, category } =
+    item.fields;
 
   // console.log(category);
 
@@ -65,4 +66,12 @@ const posts = entries.items.map((item) => {
       );
     })
   }
+  <div class="ml-auto mr-0 text-right">
+    <a
+      class="text-amber-600 dark:text-amber-200 text-xl block mt-2 mb-1"
+      href={"/" + lang + "/posts/2"}
+    >
+      Older Posts
+    </a>
+  </div>
 </MainLayout>
