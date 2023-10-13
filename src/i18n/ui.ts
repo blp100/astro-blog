@@ -24,6 +24,8 @@ export const ui = {
     "category.name": "Category: ",
     "tag.list": "Total tags",
     "tag.name": "Tag: ",
+    "pagination.prev": "Newer Posts",
+    "pagination.next": "Older Posts",
   },
   "zh-tw": {
     "nav.home": "首頁",
@@ -43,5 +45,7 @@ export const ui = {
     "category.name": "目錄名稱：",
     "tag.list": "總計 個標籤",
     "tag.name": "標籤名稱：",
+    "pagination.prev": "更新的文章",
+    "pagination.next": "更久之前的文章",
   },
 } as const;

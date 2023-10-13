@@ -66,12 +66,12 @@ const posts = entries.items.map((item) => {
       );
     })
   }
-  <div class="ml-auto mr-0 text-right">
+  <div class="ml-auto mr-0 text-right md:text-xl">
     <a
-      class="text-amber-600 dark:text-amber-200 text-xl block mt-2 mb-1"
+      class="text-amber-600 dark:text-amber-200 block mt-2 mb-1"
       href={"/" + lang + "/posts/2"}
     >
-      Older Posts
+      {t("pagination.next")}
     </a>
   </div>
 </MainLayout>

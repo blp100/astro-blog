@@ -9,7 +9,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 export async function getStaticPaths({ paginate }) {
-  const t = useTranslations("en");
+  const t = useTranslations("zh-tw");
   const { items } = await contentfulClient.getEntries<BlogPost>({
     content_type: "astroBlog",
     locale: t("contentful.locale"),
@@ -45,7 +45,7 @@ const { url } = page;
 
 const prevPath = url.prev?.indexOf("page/1") !== -1 ? "/" + lang : url.prev;
 
-const posts = page.data.map((item: any) => {
+const posts = page.data.map((item:any) => {
   const { updatedAt } = item.sys;
   const { title, date, description, slug, heroImage, content, category } =
     item.fields;
@@ -66,7 +66,7 @@ const posts = page.data.map((item: any) => {
 
 <MainLayout>
   {
-    posts.map((post: any) => {
+    posts.map((post:any) => {
       const {
         slug,
         title,
@@ -94,24 +94,24 @@ const posts = page.data.map((item: any) => {
       );
     })
   }
-  <div class="flex justify-between">
+  <div class="flex justify-between md:text-xl">
     {
       url.prev && (
         <a
-          class="text-amber-600 dark:text-amber-200 text-xl block mt-2 mb-1"
+          class="text-amber-600 dark:text-amber-200 block mt-2 mb-1"
           href={prevPath}
         >
-          Newer Posts
+          {t("pagination.prev")}
         </a>
       )
     }
     {
       url.next && (
         <a
-          class="text-amber-600 dark:text-amber-200 text-xl block mt-2 mb-1"
+          class="text-amber-600 dark:text-amber-200 block mt-2 mb-1"
           href={url.next}
         >
-          Older Posts
+          {t("pagination.next")}
         </a>
       )
     }
