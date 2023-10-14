@@ -1,5 +1,6 @@
 ---
 import { contentfulClient } from "../../../lib/contentful";
+import { PAGINATIOM_SIZE } from "../../../consts";
 import type { BlogPost, Category, HeroImage } from "../../../lib/contentful";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 import BlogPostList from "../../../components/BlogPostList.astro";
@@ -17,7 +18,7 @@ export async function getStaticPaths({ paginate }) {
     include: 1,
   });
 
-  return paginate(items, { pageSize: 2 });
+  return paginate(items, { pageSize: PAGINATIOM_SIZE });
   // const posts = items.map((item) => {
   //   const { updatedAt } = item.sys;
   //   const { title, date, description, slug, heroImage, content, category } =
@@ -45,7 +46,7 @@ const { url } = page;
 
 const prevPath = url.prev?.indexOf("page/1") !== -1 ? "/" + lang : url.prev;
 
-const posts = page.data.map((item:any) => {
+const posts = page.data.map((item: any) => {
   const { updatedAt } = item.sys;
   const { title, date, description, slug, heroImage, content, category } =
     item.fields;
@@ -66,7 +67,7 @@ const posts = page.data.map((item:any) => {
 
 <MainLayout>
   {
-    posts.map((post:any) => {
+    posts.map((post: any) => {
       const {
         slug,
         title,
