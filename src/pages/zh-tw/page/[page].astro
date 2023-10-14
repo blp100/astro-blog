@@ -17,27 +17,11 @@ export async function getStaticPaths({ paginate }) {
     order: ["-sys.createdAt"],
     include: 1,
   });
+  // Remove first Page
+  const pages = paginate(items, { pageSize: PAGINATIOM_SIZE });
+  pages.shift();
 
-  return paginate(items, { pageSize: PAGINATIOM_SIZE });
-  // const posts = items.map((item) => {
-  //   const { updatedAt } = item.sys;
-  //   const { title, date, description, slug, heroImage, content, category } =
-  //     item.fields;
-
-  //   console.log(category);
-
-  //   return {
-  //     title,
-  //     slug,
-  //     description,
-  //     heroImage: (heroImage as HeroImage).fields.file.url,
-  //     pubDate: new Date(date),
-  //     updatedDate: new Date(updatedAt),
-  //     content: content.toString(),
-  //     categorySlug: (category as Category).fields.slug,
-  //     categoryTitle: (category as Category).fields.title,
-  //   };
-  // })
+  return pages;
 }
 
 const { page } = Astro.props;

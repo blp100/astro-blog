@@ -44,7 +44,6 @@ export interface BlogCategory {
 }
 
 export type Category = Entry<BlogCategory>;
-
 export type Tags = Array<Entry<BlogTags>>;
 export type TagType = Entry<BlogTags>;
 
