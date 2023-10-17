@@ -1,0 +1,91 @@
+---
+import { useTranslations, getLangFromUrl } from "../../../../i18n/utils";
+import FilteredListLayout from "../../../../layouts/FilteredListLayout.astro";
+import MainLayout from "../../../../layouts/MainLayout.astro";
+import { contentfulClient } from "../../../../lib/contentful";
+import type { BlogTags, BlogPost, Category } from "../../../../lib/contentful";
+import FilteredList from "../../../../components/FilteredList.astro";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const t = useTranslations("en");
+  const { items } = await contentfulClient.getEntries<BlogTags>({
+    content_type: "astroTags",
+    locale: t("contentful.locale"),
+    order: ["-sys.createdAt"],
+    limit: 15,
+    include: 0,
+  });
+
+  const tagPages = await Promise.all(
+    items.map(async (item) => {
+      const { title, slug } = item.fields;
+      const id = item.sys.id;
+
+      const entries =
+        await contentfulClient.withoutUnresolvableLinks.getEntries<BlogPost>({
+          content_type: "astroBlog",
+          locale: t("contentful.locale"),
+          order: ["-sys.createdAt"],
+          limit: 15,
+          links_to_entry: id,
+        });
+
+      const pages = paginate(entries.items, {
+        params: { slug },
+        pageSize: 15,
+        props: { title },
+      });
+
+      return pages;
+    })
+  );
+  return tagPages;
+}) satisfies GetStaticPaths;
+
+const { data } = Astro.props.page;
+const { title } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const posts = data.map((item: any) => {
+  const { title, date, slug } = item.fields;
+  const id = item.sys.id;
+
+  return {
+    blogTitle: title,
+    postSlug: slug,
+    pubDate: new Date(date),
+  };
+});
+let recordYear: string;
+---
+
+<MainLayout>
+  <FilteredListLayout lang={lang} title={title}>
+    {
+      posts.map((post: any) => {
+        const { blogTitle, postSlug, pubDate } = post;
+
+        const year = pubDate.toLocaleDateString(lang, {
+          year: "numeric",
+        });
+
+        const toggleYearColumn: boolean = recordYear != year;
+        recordYear = year;
+
+        return (
+          <FilteredList
+            lang={lang}
+            title={blogTitle}
+            slug={postSlug}
+            pubDate={pubDate}
+            toggleYearColumn={toggleYearColumn}
+            year={year}
+          />
+        );
+      })
+    }
+  </FilteredListLayout>
+</MainLayout>

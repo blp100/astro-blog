@@ -1,0 +1,96 @@
+---
+import { useTranslations, getLangFromUrl } from "../../../../i18n/utils";
+import FilteredListLayout from "../../../../layouts/FilteredListLayout.astro";
+import MainLayout from "../../../../layouts/MainLayout.astro";
+import { contentfulClient } from "../../../../lib/contentful";
+import type {
+  BlogCategory,
+  BlogPost,
+  Category,
+} from "../../../../lib/contentful";
+import FilteredList from "../../../../components/FilteredList.astro";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const t = useTranslations("en");
+  const { items } = await contentfulClient.getEntries<BlogCategory>({
+    content_type: "astroCategories",
+    locale: t("contentful.locale"),
+    order: ["-sys.createdAt"],
+    limit: 15,
+    include: 0,
+  });
+
+  const categoriesPages = await Promise.all(
+    items.map(async (item) => {
+      const { slug, title } = item.fields;
+      const id = item.sys.id;
+
+      const entries =
+        await contentfulClient.withoutUnresolvableLinks.getEntries<BlogPost>({
+          content_type: "astroBlog",
+          locale: t("contentful.locale"),
+          order: ["-sys.createdAt"],
+          limit: 15,
+          links_to_entry: id,
+        });
+
+      const pages = paginate(entries.items, {
+        params: { slug },
+        pageSize: 15,
+        props: { title },
+      });
+
+      return pages;
+    })
+  );
+  return categoriesPages;
+}) satisfies GetStaticPaths;
+
+const { data } = Astro.props.page;
+const { title } = Astro.props;
+const { slug } = Astro.params;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const posts = data.map((item: any) => {
+  const { title, date, slug, category } = item.fields;
+
+  return {
+    blogTitle: title,
+    postSlug: slug,
+    pubDate: new Date(date),
+    category: (category as Category).fields.slug,
+  };
+});
+let recordYear: string;
+---
+
+<MainLayout>
+  <FilteredListLayout lang={lang} title={title}>
+    {
+      posts.map((post: any) => {
+        const { blogTitle, postSlug, pubDate } = post;
+
+        const year = pubDate.toLocaleDateString(lang, {
+          year: "numeric",
+        });
+
+        const toggleYearColumn: boolean = recordYear != year;
+        recordYear = year;
+
+        return (
+          <FilteredList
+            lang={lang}
+            title={blogTitle}
+            slug={postSlug}
+            pubDate={pubDate}
+            toggleYearColumn={toggleYearColumn}
+            year={year}
+          />
+        );
+      })
+    }
+  </FilteredListLayout>
+</MainLayout>

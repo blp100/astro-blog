@@ -21,7 +21,6 @@ export const getStaticPaths = (async ({ paginate })=> {
 
   // Remove first Page
   const pages = paginate(items, { pageSize: PAGINATIOM_SIZE });
-  console.log(pages);
   pages.shift();
 
   return pages;
