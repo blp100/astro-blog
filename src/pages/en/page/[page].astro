@@ -5,11 +5,12 @@ import type { BlogPost, Category, HeroImage } from "../../../lib/contentful";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 import BlogPostList from "../../../components/BlogPostList.astro";
 import MainLayout from "../../../layouts/MainLayout.astro";
+import type { GetStaticPaths } from 'astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-export async function getStaticPaths({ paginate }) {
+export const getStaticPaths = (async ({ paginate })=> {
   const t = useTranslations("en");
   const { items } = await contentfulClient.getEntries<BlogPost>({
     content_type: "astroBlog",
@@ -20,13 +21,13 @@ export async function getStaticPaths({ paginate }) {
 
   // Remove first Page
   const pages = paginate(items, { pageSize: PAGINATIOM_SIZE });
+  console.log(pages);
   pages.shift();
 
   return pages;
-}
+}) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
-
 const { url } = page;
 
 const prevPath = url.prev?.indexOf("page/1") !== -1 ? "/" + lang : url.prev;
