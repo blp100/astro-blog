@@ -36,6 +36,8 @@ const posts = page.data.map((item: any) => {
   const { title, date, description, slug, heroImage, content, category } =
     item.fields;
 
+  const image = heroImage as HeroImage;
+
   return {
     title,
     slug,
@@ -46,51 +48,42 @@ const posts = page.data.map((item: any) => {
     content: content.toString(),
     categorySlug: (category as Category).fields.slug,
     categoryTitle: (category as Category).fields.title,
+    imageDescription: image.fields.description,
   };
 });
 ---
 
 <MainLayout>
   {
-    posts.map(
-      (post: {
-        slug: string;
-        title: string;
-        updatedDate: string;
-        pubDate: string;
-        description: string;
-        heroImage: string;
-        content: string;
-        categorySlug: string;
-        categoryTitle: string;
-      }) => {
-        const {
-          slug,
-          title,
-          updatedDate,
-          pubDate,
-          description,
-          heroImage,
-          content,
-          categorySlug,
-          categoryTitle,
-        } = post;
-        return (
-          <BlogPostList
-            lang={lang}
-            slug={slug}
-            title={title}
-            updatedDate={updatedDate}
-            pubDate={pubDate}
-            description={description}
-            heroImage={heroImage}
-            content={content}
-            categorySlug={categorySlug}
-            categoryTitle={categoryTitle}
-          />
-        );
-      }
-    )
+    posts.map((post: any) => {
+      const {
+        slug,
+        title,
+        updatedDate,
+        pubDate,
+        description,
+        heroImage,
+        content,
+        categorySlug,
+        categoryTitle,
+        imageDescription,
+      } = post;
+      return (
+        <BlogPostList
+          lang={lang}
+          slug={slug}
+          title={title}
+          updatedDate={updatedDate}
+          pubDate={pubDate}
+          description={description}
+          heroImage={heroImage}
+          content={content}
+          categorySlug={categorySlug}
+          categoryTitle={categoryTitle}
+          imageDescription={imageDescription}
+        />
+      );
+    })
   }
   <div class="flex justify-between md:text-xl">
     {
