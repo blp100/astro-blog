@@ -14,9 +14,13 @@ const {
   content,
   categorySlug,
   categoryTitle,
+  imageDescription,
 } = Astro.props;
 
 const t = useTranslations(lang);
+
+const imageSourceURL = imageDescription.slice(imageDescription.indexOf("http"));
+const imageText = imageDescription.replace(imageSourceURL, "");
 ---
 
 <ul>
@@ -38,7 +42,7 @@ const t = useTranslations(lang);
     <div class="flex gap-2 text-neutral-400 text-xs">
       <BlogDate pubDate={pubDate} updatedDate={updatedDate} />
     </div>
-    <img src={heroImage} class="rounded-xl" />
+    <img src={heroImage} class="rounded-xl" alt={imageText} />
     {
       content.indexOf("[[MORE]]") !== -1 ? (
         <>

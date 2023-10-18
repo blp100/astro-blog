@@ -20,6 +20,9 @@ const posts = entries.items.map((item) => {
   const { title, date, description, slug, heroImage, content, category } =
     item.fields;
 
+  const image = heroImage as HeroImage;
+  console.log(image.fields.description)
+
   return {
     title,
     slug,
@@ -30,6 +33,7 @@ const posts = entries.items.map((item) => {
     content: content.toString(),
     categorySlug: (category as Category).fields.slug,
     categoryTitle: (category as Category).fields.title,
+    imageDescription: image.fields.description,
   };
 });
 ---
@@ -47,6 +51,7 @@ const posts = entries.items.map((item) => {
         content,
         categorySlug,
         categoryTitle,
+        imageDescription,
       } = post;
       return (
         <BlogPostList
@@ -60,6 +65,7 @@ const posts = entries.items.map((item) => {
           content={content}
           categorySlug={categorySlug}
           categoryTitle={categoryTitle}
+          imageDescription={imageDescription}
         />
       );
     })
