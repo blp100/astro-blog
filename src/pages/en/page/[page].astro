@@ -1,16 +1,16 @@
 ---
-import { contentfulClient } from "../../../lib/contentful";
-import { PAGINATIOM_SIZE } from "../../../consts";
-import type { BlogPost, Category, HeroImage } from "../../../lib/contentful";
-import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
-import BlogPostList from "../../../components/BlogPostList.astro";
-import MainLayout from "../../../layouts/MainLayout.astro";
-import type { GetStaticPaths } from 'astro';
+import { contentfulClient } from "@lib/contentful";
+import { PAGINATIOM_SIZE } from "consts.ts";
+import type { BlogPost, Category, HeroImage } from "@lib/contentful";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import BlogPostList from "@components/BlogPostList.astro";
+import MainLayout from "@layouts/MainLayout.astro";
+import type { GetStaticPaths } from "astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-export const getStaticPaths = (async ({ paginate })=> {
+export const getStaticPaths = (async ({ paginate }) => {
   const t = useTranslations("en");
   const { items } = await contentfulClient.getEntries<BlogPost>({
     content_type: "astroBlog",
@@ -31,7 +31,7 @@ const { url } = page;
 
 const prevPath = url.prev?.indexOf("page/1") !== -1 ? "/" + lang : url.prev;
 
-const posts = page.data.map((item) => {
+const posts = page.data.map((item: any) => {
   const { updatedAt } = item.sys;
   const { title, date, description, slug, heroImage, content, category } =
     item.fields;
@@ -52,33 +52,45 @@ const posts = page.data.map((item) => {
 
 <MainLayout>
   {
-    posts.map((post) => {
-      const {
-        slug,
-        title,
-        updatedDate,
-        pubDate,
-        description,
-        heroImage,
-        content,
-        categorySlug,
-        categoryTitle,
-      } = post;
-      return (
-        <BlogPostList
-          lang={lang}
-          slug={slug}
-          title={title}
-          updatedDate={updatedDate}
-          pubDate={pubDate}
-          description={description}
-          heroImage={heroImage}
-          content={content}
-          categorySlug={categorySlug}
-          categoryTitle={categoryTitle}
-        />
-      );
-    })
+    posts.map(
+      (post: {
+        slug: string;
+        title: string;
+        updatedDate: string;
+        pubDate: string;
+        description: string;
+        heroImage: string;
+        content: string;
+        categorySlug: string;
+        categoryTitle: string;
+      }) => {
+        const {
+          slug,
+          title,
+          updatedDate,
+          pubDate,
+          description,
+          heroImage,
+          content,
+          categorySlug,
+          categoryTitle,
+        } = post;
+        return (
+          <BlogPostList
+            lang={lang}
+            slug={slug}
+            title={title}
+            updatedDate={updatedDate}
+            pubDate={pubDate}
+            description={description}
+            heroImage={heroImage}
+            content={content}
+            categorySlug={categorySlug}
+            categoryTitle={categoryTitle}
+          />
+        );
+      }
+    )
   }
   <div class="flex justify-between md:text-xl">
     {

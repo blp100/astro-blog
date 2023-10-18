@@ -1,14 +1,14 @@
 ---
-import { useTranslations, getLangFromUrl } from "../../../../i18n/utils";
-import FilteredListLayout from "../../../../layouts/FilteredListLayout.astro";
-import MainLayout from "../../../../layouts/MainLayout.astro";
-import { contentfulClient } from "../../../../lib/contentful";
+import { useTranslations, getLangFromUrl } from "@i18n/utils";
+import FilteredListLayout from "@layouts/FilteredListLayout.astro";
+import MainLayout from "@layouts/MainLayout.astro";
+import { contentfulClient } from "@lib/contentful";
 import type {
   BlogCategory,
   BlogPost,
   Category,
-} from "../../../../lib/contentful";
-import FilteredList from "../../../../components/FilteredList.astro";
+} from "@lib/contentful";
+import FilteredList from "@components/FilteredList.astro";
 import type { GetStaticPaths } from "astro";
 
 export const getStaticPaths = (async ({ paginate }) => {

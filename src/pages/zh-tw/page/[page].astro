@@ -1,10 +1,10 @@
 ---
-import { contentfulClient } from "../../../lib/contentful";
-import { PAGINATIOM_SIZE } from "../../../consts";
-import type { BlogPost, Category, HeroImage } from "../../../lib/contentful";
-import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
-import BlogPostList from "../../../components/BlogPostList.astro";
-import MainLayout from "../../../layouts/MainLayout.astro";
+import { contentfulClient } from "@lib/contentful";
+import { PAGINATIOM_SIZE } from "consts.ts";
+import type { BlogPost, Category, HeroImage } from "@lib/contentful";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import BlogPostList from "@components/BlogPostList.astro";
+import MainLayout from "@layouts/MainLayout.astro";
 import type { GetStaticPaths } from "astro";
 
 const lang = getLangFromUrl(Astro.url);

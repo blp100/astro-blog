@@ -1,9 +1,9 @@
 ---
-import { contentfulClient } from "../../lib/contentful";
-import type { BlogPost, Category, HeroImage } from "../../lib/contentful";
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import BlogPostList from "../../components/BlogPostList.astro";
-import MainLayout from "../../layouts/MainLayout.astro";
+import { contentfulClient } from "@lib/contentful";
+import type { BlogPost, Category, HeroImage } from "@lib/contentful";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import BlogPostList from "@components/BlogPostList.astro";
+import MainLayout from "@layouts/MainLayout.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
