@@ -29,6 +29,7 @@ export default defineConfig({
             "p-4 bg-amber-50 dark:bg-neutral-800 border-l-4 border-orange-200 dark:border-neutral-700 my-2",
           a: "text-amber-600 dark:text-amber-200",
           ol: "p-2 list-decimal list-inside",
+          strong: "dark:text-neutral-200",
           // ul: "px-6 p-2 list-disc",
         },
       ],

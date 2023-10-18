@@ -60,6 +60,8 @@ module.exports = {
     "list-decimal",
     "list-inside",
     "p-2",
+    //strong
+    "dark:text-neutral-200",
   ],
   theme: {
     extend: {
