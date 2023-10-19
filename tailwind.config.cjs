@@ -39,12 +39,12 @@ module.exports = {
     "dark:text-boston-blue-300",
     "text-lg",
     // horizontal line
-    "border-t-[1rem]",
+    "border-t-8",
     "w-52",
     "mx-auto",
     "my-4",
     "border-orange-200",
-    "dark:border-zinc-400",
+    "dark:border-neutral-400",
     "border-double",
     //black quote
     "p-4",
