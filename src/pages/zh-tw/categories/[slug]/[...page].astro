@@ -38,6 +38,7 @@ export const getStaticPaths = (async ({ paginate }) => {
       const pages = paginate(entries.items, {
         params: { slug },
         pageSize: 15,
+        props: { title },
       });
 
       return pages;
@@ -47,11 +48,11 @@ export const getStaticPaths = (async ({ paginate }) => {
 }) satisfies GetStaticPaths;
 
 const { data } = Astro.props.page;
-const { slug } = Astro.params;
+const { title } = Astro.props;
+// const { slug } = Astro.params;
 
 const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
-const title = data[0].fields.category.fields.title;
+// const t = useTranslations(lang);
 
 const posts = data.map((item: any) => {
   const { title, date, slug, category } = item.fields;

@@ -3,7 +3,7 @@ import { useTranslations, getLangFromUrl } from "@i18n/utils";
 import FilteredListLayout from "@layouts/FilteredListLayout.astro";
 import MainLayout from "@layouts/MainLayout.astro";
 import { contentfulClient } from "@lib/contentful";
-import type { BlogTags, BlogPost, Category } from "@lib/contentful";
+import type { BlogTags, BlogPost } from "@lib/contentful";
 import FilteredList from "@components/FilteredList.astro";
 import type { GetStaticPaths } from "astro";
 
@@ -47,11 +47,11 @@ const { data } = Astro.props.page;
 const { title } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+// const t = useTranslations(lang);
 
 const posts = data.map((item: any) => {
   const { title, date, slug } = item.fields;
-  const id = item.sys.id;
+  // const id = item.sys.id;
 
   return {
     blogTitle: title,
