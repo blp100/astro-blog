@@ -41,7 +41,7 @@ const posts = page.data.map((item: any) => {
     title,
     slug,
     description,
-    heroImage: (heroImage as HeroImage).fields.file.url,
+    heroImage,
     pubDate: new Date(date),
     updatedDate: new Date(updatedAt),
     content: content.toString(),
@@ -65,7 +65,6 @@ const posts = page.data.map((item: any) => {
         content,
         categorySlug,
         categoryTitle,
-        imageDescription,
       } = post;
       return (
         <BlogPostList
@@ -79,7 +78,6 @@ const posts = page.data.map((item: any) => {
           content={content}
           categorySlug={categorySlug}
           categoryTitle={categoryTitle}
-          imageDescription={imageDescription}
         />
       );
     })

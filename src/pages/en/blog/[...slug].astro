@@ -2,7 +2,7 @@
 import { useTranslations } from "@i18n/utils";
 import Post from "@layouts/Post.astro";
 import { contentfulClient } from "@lib/contentful";
-import type { BlogPost, Category, HeroImage } from "@lib/contentful";
+import type { BlogPost, Category } from "@lib/contentful";
 import { Markdown } from "@astropub/md";
 import type { GetStaticPaths } from "astro";
 
@@ -28,7 +28,6 @@ export const getStaticPaths = (async () => {
     } = item.fields;
 
     const updatedContent = content.toString().replace("[[MORE]]", "");
-    const image = heroImage as HeroImage;
 
     return {
       params: { slug },
@@ -39,11 +38,10 @@ export const getStaticPaths = (async () => {
         pubDate: new Date(date),
         updatedDate: new Date(updatedAt),
         description,
-        heroImage: image.fields.file.url,
+        heroImage: heroImage,
         categorySlug: (category as Category).fields.slug,
         categoryTitle: (category as Category).fields.title,
         tags,
-        imageDescription: image.fields.description,
       },
     };
   });

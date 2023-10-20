@@ -1,0 +1,35 @@
+---
+import type { HeroImage as HeroImageType } from "@lib/contentful";
+
+const { heroImage } = Astro.props;
+
+const image = heroImage as HeroImageType;
+
+const imageUrl = image.fields.file.url.toString();
+const imageDescription = image.fields.description.toString();
+const imageWidth = image.fields.file.details.image.width.toString();
+const imageHeight = image.fields.file.details.image.height.toString();
+const imageSourceURL = imageDescription.slice(imageDescription.indexOf("http"));
+const imageText = imageDescription.replace(imageSourceURL, "");
+---
+
+<img
+  src={imageUrl + "?w=" + imageWidth + "&fm=webp"}
+  loading="lazy"
+  class="rounded-xl"
+  alt={imageText}
+  width={imageWidth}
+  height={imageHeight}
+  srcset={imageUrl +
+    "?w=400&fm=webp 400w, " +
+    imageUrl +
+    "?w=800&fm=webp 800w, " +
+    imageUrl +
+    "?w=1200&fm=webp 1200w, " +
+    imageUrl +
+    "?w=2400&fm=webp 2400w"}
+  sizes="(max-width: 400px) 400w,
+         (max-width: 800px) 800w,
+         (max-width: 1200px) 1200w,
+         (max-width: 2400px) 2400w"
+/>

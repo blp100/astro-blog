@@ -7,6 +7,7 @@ import Article from "../components/Article.astro";
 import BlogDate from "../components/BlogDate.astro";
 import { TbExternalLink } from "react-icons/tb";
 import type { TagType } from "../lib/contentful";
+import HeroImage from "@components/HeroImage.astro";
 
 const {
   lang,
@@ -15,12 +16,12 @@ const {
   pubDate,
   updatedDate,
   heroImage,
-  imageDescription,
   categorySlug,
   categoryTitle,
   tags,
 } = Astro.props;
 
+const imageDescription = heroImage.fields.description;
 const imageSourceURL = imageDescription.slice(imageDescription.indexOf("http"));
 const imageText = imageDescription.replace(imageSourceURL, "");
 ---
@@ -51,12 +52,7 @@ const imageText = imageDescription.replace(imageSourceURL, "");
           <BlogDate pubDate={pubDate} updatedDate={updatedDate} />
         </div>
         <div>
-          <img
-            class="rounded-xl"
-            height={510}
-            src={heroImage}
-            alt={imageText}
-          />
+          <HeroImage heroImage={heroImage} />
           <p class="py-2 text-xs text-neutral-500">
             <span>
               {imageText}

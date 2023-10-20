@@ -1,6 +1,6 @@
 ---
 import { contentfulClient } from "@lib/contentful";
-import type { BlogPost, Category, HeroImage } from "@lib/contentful";
+import type { BlogPost, Category } from "@lib/contentful";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import BlogPostList from "@components/BlogPostList.astro";
 import MainLayout from "@layouts/MainLayout.astro";
@@ -20,19 +20,16 @@ const posts = entries.items.map((item) => {
   const { title, date, description, slug, heroImage, content, category } =
     item.fields;
 
-  const image = heroImage as HeroImage;
-
   return {
     title,
     slug,
     description,
-    heroImage: (heroImage as HeroImage).fields.file.url,
+    heroImage,
     pubDate: new Date(date),
     updatedDate: new Date(updatedAt),
     content: content.toString(),
     categorySlug: (category as Category).fields.slug,
     categoryTitle: (category as Category).fields.title,
-    imageDescription: image.fields.description,
   };
 });
 
@@ -52,7 +49,6 @@ const posts = entries.items.map((item) => {
         content,
         categorySlug,
         categoryTitle,
-        imageDescription,
       } = post;
       return (
         <BlogPostList
@@ -66,7 +62,6 @@ const posts = entries.items.map((item) => {
           content={content}
           categorySlug={categorySlug}
           categoryTitle={categoryTitle}
-          imageDescription={imageDescription}
         />
       );
     })

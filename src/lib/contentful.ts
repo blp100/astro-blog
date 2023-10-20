@@ -10,11 +10,18 @@ export interface HeroImage {
     description: EntryFieldTypes.Text;
     file: {
       url: EntryFieldTypes.Text;
+      details: {
+        size: EntryFieldTypes.Number;
+        image: {
+          width: EntryFieldTypes.Number;
+          height: EntryFieldTypes.Number;
+        };
+      };
     };
   };
 }
 
-export interface BlogTags{
+export interface BlogTags {
   contentTypeId: "astroTags";
   fields: {
     title: EntryFieldTypes.Text;
