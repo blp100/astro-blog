@@ -24,12 +24,16 @@ const {
 const imageDescription = heroImage.fields.description;
 const imageSourceURL = imageDescription.slice(imageDescription.indexOf("http"));
 const imageText = imageDescription.replace(imageSourceURL, "");
+
+const imageWidth = heroImage.fields.file.details.image.width.toString();
+const imageURL =
+  heroImage.fields.file.url.toString() + "?w=" + imageWidth + "&fm=webp";
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang={lang} class="scroll-smooth">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} image={imageURL} />
   </head>
 
   <Body>
