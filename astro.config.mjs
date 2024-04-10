@@ -9,7 +9,7 @@ import markdownIntegration from "@astropub/md";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://example.com",
+  site: "https://gamestorynight.vercel.app/",
   integrations: [mdx(), sitemap(), tailwind(), react(), markdownIntegration()],
   markdown: {
     remarkPlugins: [remarkReadingTime],
